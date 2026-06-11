@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Cup Simulator - 7 a 0</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app" class="app">
+        <!-- Screen: Lineup -->
+        <div id="lineup-screen" class="screen active">
+            <header class="header">
+                <div class="header-left">
+                    <span class="logo">⚽</span>
+                    <h1>World Cup Simulator</h1>
+                </div>
+                <div class="header-right">
+                    <button class="btn-new-team" onclick="app.selectRandomTeam()">🎲 Nova Seleção</button>
+                </div>
+            </header>
+
+            <div class="main-layout">
+                <!-- LEFT PANEL -->
+                <div class="left-panel">
+                    <div class="team-header">
+                        <span id="team-flag" class="team-flag">⚽</span>
+                        <div class="team-info">
+                            <h2 id="team-name">Selecione</h2>
+                            <div class="formation-box">
+                                <label>Formação:</label>
+                                <select id="formation-select" onchange="app.changeFormation()">
+                                    <option value="4-3-3">4-3-3</option>
+                                    <option value="4-4-2">4-4-2</option>
+                                    <option value="3-5-2">3-5-2</option>
+                                    <option value="5-3-2">5-3-2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="players-section">
+                        <h3>Jogadores</h3>
+                        <div id="players-list" class="players-list">
+                            <!-- Players will be populated here -->
+                        </div>
+                    </div>
+
+                    <div class="left-footer">
+                        <button class="btn-roll" onclick="app.selectRandomTeam()">🎲 Tirar</button>
+                        <span id="lineup-count" class="lineup-count">0/11</span>
+                    </div>
+                </div>
+
+                <!-- CENTER PANEL -->
+                <div class="center-panel">
+                    <svg class="field" viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
+                        <!-- Field background -->
+                        <rect x="5" y="5" width="90" height="140" fill="#2d5016" stroke="#fff" stroke-width="0.8"/>
+                        
+                        <!-- Center line -->
+                        <line x1="50" y1="5" x2="50" y2="145" stroke="#fff" stroke-width="0.5"/>
+                        
+                        <!-- Center circle -->
+                        <circle cx="50" cy="75" r="8" fill="none" stroke="#fff" stroke-width="0.5"/>
+                        <circle cx="50" cy="75" r="1" fill="#fff"/>
+                        
+                        <!-- Penalty areas -->
+                        <rect x="15" y="5" width="70" height="20" fill="none" stroke="#fff" stroke-width="0.5"/>
+                        <rect x="15" y="125" width="70" height="20" fill="none" stroke="#fff" stroke-width="0.5"/>
+                        
+                        <!-- Goal areas -->
+                        <rect x="30" y="5" width="40" height="10" fill="none" stroke="#fff" stroke-width="0.5"/>
+                        <rect x="30" y="135" width="40" height="10" fill="none" stroke="#fff" stroke-width="0.5"/>
+                    </svg>
+
+                    <div id="field-positions" class="field-positions">
+                        <!-- Player positions will be populated here -->
+                    </div>
+                </div>
+
+                <!-- RIGHT PANEL -->
+                <div class="right-panel">
+                    <h3>Posições</h3>
+                    <div id="positions-list" class="positions-list">
+                        <!-- Available positions will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <button class="btn-skip" onclick="app.skipPlayer()">⏭️ Pular</button>
+                <button class="btn-clear" onclick="app.clearLineup()">🗑️ Limpar</button>
+                <button class="btn-start" id="start-tournament-btn" onclick="app.startTournament()" disabled>
+                    🏆 Iniciar Torneio
+                </button>
+            </footer>
+        </div>
+
+        <!-- Screen: Tournament -->
+        <div id="tournament-screen" class="screen">
+            <header class="header">
+                <h1>Copa do Mundo - Fase de Grupos</h1>
+                <button class="btn-back" onclick="app.backToLineup()">← Voltar</button>
+            </header>
+
+            <div class="tournament-container">
+                <div id="groups-container" class="groups-container">
+                    <!-- Groups will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

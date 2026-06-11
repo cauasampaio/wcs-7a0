@@ -1,118 +1,104 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>World Cup Simulator - 7 a 0</title>
+    <title>Simulador de Copa do Mundo - 7-0 Style</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚽</text></svg>">
 </head>
 <body>
-    <div id="app" class="app">
-        <!-- Screen: Lineup -->
-        <div id="lineup-screen" class="screen active">
-            <header class="header">
-                <div class="header-left">
-                    <span class="logo">⚽</span>
-                    <h1>World Cup Simulator</h1>
-                </div>
-                <div class="header-right">
-                    <button class="btn-new-team" onclick="app.selectRandomTeam()">🎲 Nova Seleção</button>
-                </div>
-            </header>
-
-            <div class="main-layout">
-                <!-- LEFT PANEL -->
-                <div class="left-panel">
-                    <div class="team-header">
-                        <span id="team-flag" class="team-flag">⚽</span>
-                        <div class="team-info">
-                            <h2 id="team-name">Selecione</h2>
-                            <div class="formation-box">
-                                <label>Formação:</label>
-                                <select id="formation-select" onchange="app.changeFormation()">
-                                    <option value="4-3-3">4-3-3</option>
-                                    <option value="4-4-2">4-4-2</option>
-                                    <option value="3-5-2">3-5-2</option>
-                                    <option value="5-3-2">5-3-2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="players-section">
-                        <h3>Jogadores</h3>
-                        <div id="players-list" class="players-list">
-                            <!-- Players will be populated here -->
-                        </div>
-                    </div>
-
-                    <div class="left-footer">
-                        <button class="btn-roll" onclick="app.selectRandomTeam()">🎲 Tirar</button>
-                        <span id="lineup-count" class="lineup-count">0/11</span>
-                    </div>
-                </div>
-
-                <!-- CENTER PANEL -->
-                <div class="center-panel">
-                    <svg class="field" viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
-                        <!-- Field background -->
-                        <rect x="5" y="5" width="90" height="140" fill="#2d5016" stroke="#fff" stroke-width="0.8"/>
-                        
-                        <!-- Center line -->
-                        <line x1="50" y1="5" x2="50" y2="145" stroke="#fff" stroke-width="0.5"/>
-                        
-                        <!-- Center circle -->
-                        <circle cx="50" cy="75" r="8" fill="none" stroke="#fff" stroke-width="0.5"/>
-                        <circle cx="50" cy="75" r="1" fill="#fff"/>
-                        
-                        <!-- Penalty areas -->
-                        <rect x="15" y="5" width="70" height="20" fill="none" stroke="#fff" stroke-width="0.5"/>
-                        <rect x="15" y="125" width="70" height="20" fill="none" stroke="#fff" stroke-width="0.5"/>
-                        
-                        <!-- Goal areas -->
-                        <rect x="30" y="5" width="40" height="10" fill="none" stroke="#fff" stroke-width="0.5"/>
-                        <rect x="30" y="135" width="40" height="10" fill="none" stroke="#fff" stroke-width="0.5"/>
-                    </svg>
-
-                    <div id="field-positions" class="field-positions">
-                        <!-- Player positions will be populated here -->
-                    </div>
-                </div>
-
-                <!-- RIGHT PANEL -->
-                <div class="right-panel">
-                    <h3>Posições</h3>
-                    <div id="positions-list" class="positions-list">
-                        <!-- Available positions will be populated here -->
-                    </div>
-                </div>
-            </div>
-
-            <footer class="footer">
-                <button class="btn-skip" onclick="app.skipPlayer()">⏭️ Pular</button>
-                <button class="btn-clear" onclick="app.clearLineup()">🗑️ Limpar</button>
-                <button class="btn-start" id="start-tournament-btn" onclick="app.startTournament()" disabled>
-                    🏆 Iniciar Torneio
-                </button>
-            </footer>
+    <header>
+        <div class="logo">
+            <h1>7-0</h1>
+            <div class="logo-subtitle">DEFINIR PARA ZERO<br>ARMA · SIMULA · 7 A 0</div>
         </div>
+        <div class="header-info">
+            <span id="current-formation-display">4-3-3 · EQUILIBRADO · CLÁSSICO</span>
+            <span>FLUXO</span>
+            <span>É ▼</span>
+            <span>CLARO</span>
+        </div>
+    </header>
 
-        <!-- Screen: Tournament -->
-        <div id="tournament-screen" class="screen">
-            <header class="header">
-                <h1>Copa do Mundo - Fase de Grupos</h1>
-                <button class="btn-back" onclick="app.backToLineup()">← Voltar</button>
-            </header>
-
-            <div class="tournament-container">
-                <div id="groups-container" class="groups-container">
-                    <!-- Groups will be populated here -->
+    <main>
+        <section id="left-panel" class="panel">
+            <div class="card">
+                <h3>TREINAMENTO</h3>
+                <div class="formation-grid">
+                    <button class="formation-btn active" data-formation="4-3-3">4-3-3</button>
+                    <button class="formation-btn" data-formation="4-4-2">4-4-2</button>
+                    <button class="formation-btn" data-formation="4-2-3-1">4-2-3-1</button>
+                    <button class="formation-btn" data-formation="4-2-4">4-2-4</button>
+                    <button class="formation-btn" data-formation="3-5-2">3-5-2</button>
+                    <button class="formation-btn" data-formation="5-3-2">5-3-2</button>
+                </div>
+                <h3 style="margin-top:15px">ESTILO</h3>
+                <div class="formation-grid">
+                    <button class="formation-btn">Defensiva</button>
+                    <button class="formation-btn active">Equilibrado</button>
+                    <button class="formation-btn">Ofensiva</button>
+                </div>
+                <h3 style="margin-top:15px">MODO · DIFICULDADE</h3>
+                <div class="formation-grid">
+                    <button class="formation-btn active">Clássico</button>
+                    <button class="formation-btn">De memória</button>
                 </div>
             </div>
+
+            <div class="card" style="display:flex; flex-direction:column">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                    <h3 id="team-name" style="margin:0">SELEÇÃO</h3>
+                    <button id="random-team-btn" class="btn" style="padding: 5px 10px; font-size: 10px;">RANDOMIZAR 🎲</button>
+                </div>
+                <div id="players-list" class="players-scroll">
+                    <!-- JS -->
+                </div>
+            </div>
+        </section>
+
+        <section id="center-panel" class="panel">
+            <div class="field-lines"></div>
+            <div class="center-circle"></div>
+            <div id="tactical-spots">
+                <!-- JS -->
+            </div>
+        </section>
+
+        <section id="right-panel" class="panel">
+            <div class="card" style="height: 100%">
+                <div class="summary-header">
+                    <span>SUMÁRIO DO JOGO</span>
+                    <span id="squad-count">0 / 11</span>
+                </div>
+                <div class="progress-bar"><div id="progress-fill"></div></div>
+                
+                <div id="positions-list">
+                    <!-- JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="display: flex; flex-direction: column; align-items: center; width: 450px; margin: 0 auto; padding: 10px 0; gap: 5px; flex-shrink: 0;">
+        <button class="btn-primary" id="start-tournament-btn" disabled style="padding: 10px 40px; font-size: 18px;">ARREMESSO 🎲</button>
+        <div style="display:flex; gap:10px; width: 100%;">
+            <button class="btn" id="skip-team-btn" style="flex:1; padding: 8px;">PULAR</button>
+            <button class="btn" id="clear-btn" style="flex:1; padding: 8px;">LIMPAR</button>
+        </div>
+        <div style="font-size: 9px; margin-top: 5px; opacity: 0.5; text-align: center;">
+            7A0 - DEFINIR PARA ZERO · ARMA · SIMULA · 7 A 0 · PRIVACIDADE
+        </div>
+    </footer>
+
+    <div id="tournament-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="tournament-results"></div>
         </div>
     </div>
 
     <script src="data.js"></script>
-    <script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

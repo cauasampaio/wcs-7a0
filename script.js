@@ -13,7 +13,11 @@ const state = {
     knockoutMatches: [],
     qualifiedTeams: [],
     champion: null,
-    isSimulating: false
+    isSimulating: false,
+    stats: {
+      scorers: {}, // { playerName: count }
+      assists: {}  // { playerName: count }
+    }
   }
 };
 
@@ -224,7 +228,7 @@ launchButton.addEventListener('click', () => {
   showSelectionList();
 });
 
-// --- Lógica de Campanha Randômica ---
+// --- Lógica de Campanha ---
 
 function startCampaign() {
   document.getElementById('main-game-layout').classList.add('hidden');
@@ -236,11 +240,16 @@ function startCampaign() {
   const selectedTeams = shuffled.slice(0, 31).map(t => ({
     name: t.name, flag: t.flag, ovr: Math.round(t.players.reduce((s, p) => s + p.ovr, 0) / t.players.length),
     pts: 0, v: 0, e: 0, d: 0, gp: 0, gc: 0, isUser: false,
-    players: t.players
+    players: t.players,
+    scorers: []
   }));
 
   const userOvr = Math.round(Object.values(state.selectedPlayers).reduce((s, p) => s + p.ovr, 0) / 11);
-  const userTeam = { name: 'Meu Time', flag: '🚩', ovr: userOvr, pts: 0, v: 0, e: 0, d: 0, gp: 0, gc: 0, isUser: true };
+  const userTeam = { 
+    name: 'Meu Time', flag: '🚩', ovr: userOvr, pts: 0, v: 0, e: 0, d: 0, gp: 0, gc: 0, isUser: true,
+    players: Object.values(state.selectedPlayers),
+    scorers: []
+  };
   
   const pool = [userTeam, ...selectedTeams].sort(() => 0.5 - Math.random());
   const groupIds = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
@@ -276,17 +285,12 @@ function simulateRound() {
     });
   });
 
-  roundMatches.sort((a, b) => {
-    const aIsUser = a.t1.isUser || a.t2.isUser;
-    const bIsUser = b.t1.isUser || b.t2.isUser;
-    return bIsUser - aIsUser;
-  });
+  roundMatches.sort((a, b) => (b.t1.isUser || b.t2.isUser) - (a.t1.isUser || a.t2.isUser));
 
   let minute = 0;
   const interval = setInterval(() => {
     minute++;
     renderLiveMatches(roundMatches, minute);
-    
     if (minute >= 90) {
       clearInterval(interval);
       state.campaign.isSimulating = false;
@@ -304,7 +308,6 @@ function simulateRound() {
 function renderLiveMatches(matches, currentMinute) {
   const list = document.getElementById('fixtures-list');
   list.innerHTML = '';
-
   const header = document.createElement('div');
   header.className = 'live-clock';
   header.innerHTML = `TEMPO DE JOGO: <strong>${currentMinute}'</strong>`;
@@ -313,42 +316,50 @@ function renderLiveMatches(matches, currentMinute) {
   matches.forEach(m => {
     const liveScore = [0, 0];
     const visibleEvents = m.events.filter(e => e.min <= currentMinute);
-    visibleEvents.forEach(e => {
-      if (e.team === m.t1.name) liveScore[0]++;
-      else liveScore[1]++;
-    });
+    visibleEvents.forEach(e => { if (e.team === m.t1.name) liveScore[0]++; else liveScore[1]++; });
 
     const isUserMatch = m.t1.isUser || m.t2.isUser;
     const matchContainer = document.createElement('div');
     matchContainer.className = `match-container ${isUserMatch ? 'user-match-highlight' : ''}`;
 
-    const item = document.createElement('div');
-    item.className = 'fixture-item';
-    
     const t1Class = m.t1.isUser ? 'team-user' : (isUserMatch ? 'team-opponent' : '');
     const t2Class = m.t2.isUser ? 'team-user' : (isUserMatch ? 'team-opponent' : '');
 
-    item.innerHTML = `
-      <div class="round">${state.campaign.phase === 'groups' ? 'GRUPO ' + m.group : 'MATA-MATA'}</div>
-      <div class="fixture-team t1 ${t1Class}">${m.t1.flag} ${m.t1.name}</div>
-      <div class="fixture-score">${liveScore[0]} - ${liveScore[1]}</div>
-      <div class="fixture-team t2 ${t2Class}">${m.t2.name} ${m.t2.flag}</div>
-    `;
+    let scoreDisplay = `<div class="fixture-score">${liveScore[0]} - ${liveScore[1]}</div>`;
+    if (currentMinute >= 90 && m.penaltyScore) {
+      scoreDisplay += `<div class="penalty-score-row">(${m.penaltyScore[0]} - ${m.penaltyScore[1]} p.)</div>`;
+    }
 
-    const details = document.createElement('div');
-    details.className = 'fixture-details expanded';
-    details.innerHTML = visibleEvents.map(ev => {
-      const isT1 = ev.team === m.t1.name;
-      return `
-        <div class="match-event ${isT1 ? 'event-left' : 'event-right'} ${ev.isUser ? 'user-goal' : 'opponent-goal'}">
-          <span class="minute">${ev.min}'</span>
-          <span class="event-text">⚽ <strong>${ev.team}</strong> - ${ev.player}</span>
+    let penaltyEventsHtml = "";
+    if (currentMinute >= 90 && m.penaltyEvents && m.penaltyEvents.length > 0) {
+      penaltyEventsHtml = `<div class="penalty-title">DISPUTA DE PÊNALTIS</div>`;
+      penaltyEventsHtml += m.penaltyEvents.map(ev => `
+        <div class="match-event ${ev.team === m.t1.name ? 'event-left' : 'event-right'} ${ev.isUser ? 'user-goal' : 'opponent-goal'}">
+          <span class="event-text">${ev.success ? '✅' : '❌'} <strong>${ev.team}</strong> - ${ev.player}</span>
         </div>
-      `;
-    }).join('');
+      `).join('');
+    }
 
-    matchContainer.appendChild(item);
-    matchContainer.appendChild(details);
+    matchContainer.innerHTML = `
+      <div class="fixture-item">
+        <div class="round">${state.campaign.phase === 'groups' ? 'GRUPO ' + m.group : 'MATA-MATA'}</div>
+        <div class="fixture-team t1 ${t1Class}">${m.t1.flag} ${m.t1.name}</div>
+        <div class="score-container-ref">${scoreDisplay}</div>
+        <div class="fixture-team t2 ${t2Class}">${m.t2.name} ${m.t2.flag}</div>
+      </div>
+      <div class="fixture-details expanded">
+        ${visibleEvents.map(ev => {
+          const isT1 = ev.team === m.t1.name;
+          return `
+            <div class="match-event ${isT1 ? 'event-left' : 'event-right'} ${ev.isUser ? 'user-goal' : 'opponent-goal'}">
+              <span class="minute">${ev.min}'</span>
+              <span class="event-text">⚽ <strong>${ev.team}</strong> - ${ev.player} ${ev.assist ? '<br><small>Ass: ' + ev.assist + '</small>' : ''}</span>
+            </div>
+          `;
+        }).join('')}
+        ${penaltyEventsHtml}
+      </div>
+    `;
     list.appendChild(matchContainer);
   });
 }
@@ -362,37 +373,47 @@ function simulateMatch(ovr1, ovr2) {
 
 function generateMatchEvents(t1, t2, score) {
   const events = [];
-  const userPlayers = Object.values(state.selectedPlayers);
-  
-  for (let i = 0; i < score[0]; i++) {
-    const min = Math.floor(Math.random() * 90) + 1;
-    let playerName = "";
-    if (t1.isUser) {
-      const scorers = userPlayers.filter(p => p.pos === 'A' || p.pos === 'M');
-      const pool = scorers.length > 0 ? scorers : userPlayers;
-      playerName = pool[Math.floor(Math.random() * pool.length)].name;
-    } else {
-      const pool = t1.players || [];
-      playerName = pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)].name : t1.name;
+  const trackGoal = (team, player, assist) => {
+    if (player) {
+      state.campaign.stats.scorers[player] = (state.campaign.stats.scorers[player] || 0) + 1;
+      if (!team.scorers.includes(player)) team.scorers.push(player);
     }
-    events.push({ min, team: t1.name, player: playerName, isUser: t1.isUser });
-  }
+    if (assist) state.campaign.stats.assists[assist] = (state.campaign.stats.assists[assist] || 0) + 1;
+  };
 
-  for (let i = 0; i < score[1]; i++) {
-    const min = Math.floor(Math.random() * 90) + 1;
-    let playerName = "";
-    if (t2.isUser) {
-      const scorers = userPlayers.filter(p => p.pos === 'A' || p.pos === 'M');
-      const pool = scorers.length > 0 ? scorers : userPlayers;
-      playerName = pool[Math.floor(Math.random() * pool.length)].name;
-    } else {
-      const pool = t2.players || [];
-      playerName = pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)].name : t2.name;
+  const getPlayers = (team) => team.players || [];
+
+  [ [t1, score[0]], [t2, score[1]] ].forEach(([team, goals]) => {
+    const players = getPlayers(team);
+    for (let i = 0; i < goals; i++) {
+      const min = Math.floor(Math.random() * 90) + 1;
+      const scorer = players.length > 0 ? players[Math.floor(Math.random() * players.length)].name : team.name;
+      let assist = null;
+      if (Math.random() > 0.3 && players.length > 1) {
+        assist = players.filter(p => p.name !== scorer)[Math.floor(Math.random() * (players.length - 1))].name;
+      }
+      events.push({ min, team: team.name, player: scorer, assist, isUser: team.isUser });
+      trackGoal(team, scorer, assist);
     }
-    events.push({ min, team: t2.name, player: playerName, isUser: t2.isUser });
-  }
+  });
 
   return events.sort((a, b) => a.min - b.min);
+}
+
+function generatePenaltyEvents(t1, t2, pScore) {
+  const pEvents = [];
+  const p1 = pScore[0], p2 = pScore[1];
+  const players1 = t1.players || [], players2 = t2.players || [];
+  const rounds = Math.max(5, p1, p2);
+  let c1 = 0, c2 = 0;
+  for (let i = 0; i < rounds; i++) {
+    if (c1 < p1) { pEvents.push({ team: t1.name, player: players1[i % players1.length]?.name || t1.name, success: true, isUser: t1.isUser }); c1++; }
+    else if (i < 5 || c1 < c2 + (5-i)) { pEvents.push({ team: t1.name, player: players1[i % players1.length]?.name || t1.name, success: false, isUser: t1.isUser }); }
+    if (c2 < p2) { pEvents.push({ team: t2.name, player: players2[i % players2.length]?.name || t2.name, success: true, isUser: t2.isUser }); c2++; }
+    else if (i < 5 || c2 < c1 + (5-i)) { pEvents.push({ team: t2.name, player: players2[i % players2.length]?.name || t2.name, success: false, isUser: t2.isUser }); }
+    if (i >= 4 && c1 !== c2 && Math.abs(c1-c2) > (rounds-i)) break;
+  }
+  return pEvents;
 }
 
 function updateStats(t1, t2, score) {
@@ -409,52 +430,27 @@ function renderGroups() {
   state.campaign.groups.forEach(group => {
     const table = document.createElement('table');
     table.className = 'group-table';
-    const sorted = [...group.teams].sort((a, b) => {
-      if (b.pts !== a.pts) return b.pts - a.pts;
-      const sgB = b.gp - b.gc;
-      const sgA = a.gp - a.gc;
-      if (sgB !== sgA) return sgB - sgA;
-      return b.gp - a.gp;
-    });
-    
+    const sorted = [...group.teams].sort((a, b) => (b.pts - a.pts) || ((b.gp - b.gc) - (a.gp - a.gc)) || (b.gp - a.gp));
     table.innerHTML = `
       <thead><tr><th>GRUPO ${group.id}</th><th>V</th><th>E</th><th>D</th><th>GF</th><th>GS</th><th>SG</th><th>P</th></tr></thead>
-      <tbody>
-        ${sorted.map(t => `
-          <tr class="${t.isUser ? 'user-team' : ''}">
-            <td>${t.flag} ${t.name}</td><td>${t.v}</td><td>${t.e}</td><td>${t.d}</td><td>${t.gp}</td><td>${t.gc}</td><td>${t.gp - t.gc}</td><td><strong>${t.pts}</strong></td>
-          </tr>
-        `).join('')}
-      </tbody>
+      <tbody>${sorted.map(t => `<tr class="${t.isUser ? 'user-team' : ''}"><td>${t.flag} ${t.name}</td><td>${t.v}</td><td>${t.e}</td><td>${t.d}</td><td>${t.gp}</td><td>${t.gc}</td><td>${t.gp - t.gc}</td><td><strong>${t.pts}</strong></td></tr>`).join('')}</tbody>
     `;
     grid.appendChild(table);
   });
 }
 
-// ========== FASE DE MATA-MATA ==========
-
 function startKnockoutPhase() {
   state.campaign.qualifiedTeams = [];
   state.campaign.groups.forEach(group => {
-    const sorted = [...group.teams].sort((a, b) => {
-      if (b.pts !== a.pts) return b.pts - a.pts;
-      const sgB = b.gp - b.gc;
-      const sgA = a.gp - a.gc;
-      if (sgB !== sgA) return sgB - sgA;
-      return b.gp - a.gp;
-    });
-    state.campaign.qualifiedTeams.push(sorted[0]);
-    state.campaign.qualifiedTeams.push(sorted[1]);
+    const sorted = [...group.teams].sort((a, b) => (b.pts - a.pts) || ((b.gp - b.gc) - (a.gp - a.gc)) || (b.gp - a.gp));
+    state.campaign.qualifiedTeams.push(sorted[0], sorted[1]);
   });
-
   state.campaign.knockoutMatches = [];
   for (let i = 0; i < 8; i += 2) {
-    state.campaign.knockoutMatches.push({ t1: state.campaign.qualifiedTeams[i*2], t2: state.campaign.qualifiedTeams[i*2+3], score: null, events: [], finished: false });
-    state.campaign.knockoutMatches.push({ t1: state.campaign.qualifiedTeams[i*2+2], t2: state.campaign.qualifiedTeams[i*2+1], score: null, events: [], finished: false });
+    state.campaign.knockoutMatches.push({ t1: state.campaign.qualifiedTeams[i*2], t2: state.campaign.qualifiedTeams[i*2+3], score: null, events: [] });
+    state.campaign.knockoutMatches.push({ t1: state.campaign.qualifiedTeams[i*2+2], t2: state.campaign.qualifiedTeams[i*2+1], score: null, events: [] });
   }
-
   state.campaign.phase = 'round16';
-  state.campaign.currentRound = 1;
   document.getElementById('groups-panel').classList.add('hidden');
   document.querySelector('.campaign-header .campaign-info').textContent = 'OITAVAS DE FINAL';
   simulateKnockoutRound();
@@ -473,87 +469,32 @@ function simulateKnockoutRound() {
       const p1 = Math.floor(Math.random() * 5) + 3;
       const p2 = Math.floor(Math.random() * 5) + 3;
       match.penaltyScore = [p1, p2];
+      match.penaltyEvents = generatePenaltyEvents(match.t1, match.t2, match.penaltyScore);
       match.winner = p1 > p2 ? match.t1 : match.t2;
     } else {
       match.winner = match.score[0] > match.score[1] ? match.t1 : match.t2;
+      match.penaltyEvents = [];
     }
   });
 
-  state.campaign.knockoutMatches.sort((a, b) => {
-    const aIsUser = a.t1.isUser || a.t2.isUser;
-    const bIsUser = b.t1.isUser || b.t2.isUser;
-    return bIsUser - aIsUser;
-  });
+  state.campaign.knockoutMatches.sort((a, b) => (b.t1.isUser || b.t2.isUser) - (a.t1.isUser || a.t2.isUser));
 
   let minute = 0;
   const interval = setInterval(() => {
     minute++;
-    renderLiveKnockout(state.campaign.knockoutMatches, minute);
-    
+    renderLiveMatches(state.campaign.knockoutMatches, minute);
     if (minute >= 90) {
       clearInterval(interval);
       state.campaign.isSimulating = false;
       document.getElementById('next-round-btn').disabled = false;
-      const phaseNames = { 'round16': 'QUARTAS DE FINAL', 'quarterfinals': 'SEMIFINAL', 'semifinals': 'FINAL', 'final': 'VER CAMPEÃO' };
+      const phaseNames = { 'round16': 'QUARTAS DE FINAL', 'quarterfinals': 'SEMIFINAL', 'semifinals': 'FINAL', 'final': 'CAMPEÃO' };
       document.getElementById('next-round-btn').textContent = phaseNames[state.campaign.phase];
     }
   }, 100);
 }
 
-function renderLiveKnockout(matches, currentMinute) {
-  const list = document.getElementById('fixtures-list');
-  list.innerHTML = '';
-
-  const header = document.createElement('div');
-  header.className = 'live-clock';
-  header.innerHTML = `TEMPO DE JOGO: <strong>${currentMinute}'</strong>`;
-  list.appendChild(header);
-
-  matches.forEach((m, idx) => {
-    const liveScore = [0, 0];
-    const visibleEvents = m.events.filter(e => e.min <= currentMinute);
-    visibleEvents.forEach(e => { if (e.team === m.t1.name) liveScore[0]++; else liveScore[1]++; });
-
-    const isUserMatch = m.t1.isUser || m.t2.isUser;
-    const matchContainer = document.createElement('div');
-    matchContainer.className = `match-container ${isUserMatch ? 'user-match-highlight' : ''}`;
-
-    const item = document.createElement('div');
-    item.className = 'fixture-item';
-    
-    const t1Class = m.t1.isUser ? 'team-user' : (isUserMatch ? 'team-opponent' : '');
-    const t2Class = m.t2.isUser ? 'team-user' : (isUserMatch ? 'team-opponent' : '');
-
-    let scoreText = `${liveScore[0]} - ${liveScore[1]}`;
-    if (currentMinute >= 90 && m.penaltyScore) {
-      scoreText += ` (${m.penaltyScore[0]} - ${m.penaltyScore[1]} p.)`;
-    }
-
-    item.innerHTML = `
-      <div class="round">M${idx + 1}</div>
-      <div class="fixture-team t1 ${t1Class}">${m.t1.flag} ${m.t1.name}</div>
-      <div class="fixture-score">${scoreText}</div>
-      <div class="fixture-team t2 ${t2Class}">${m.t2.name} ${m.t2.flag}</div>
-    `;
-
-    const details = document.createElement('div');
-    details.className = 'fixture-details expanded';
-    details.innerHTML = visibleEvents.map(ev => {
-      const isT1 = ev.team === m.t1.name;
-      return `<div class="match-event ${isT1 ? 'event-left' : 'event-right'} ${ev.isUser ? 'user-goal' : 'opponent-goal'}">
-        <span class="minute">${ev.min}'</span><span class="event-text">⚽ <strong>${ev.team}</strong> - ${ev.player}</span>
-      </div>`;
-    }).join('');
-
-    matchContainer.appendChild(item);
-    matchContainer.appendChild(details);
-    list.appendChild(matchContainer);
-  });
-}
-
 function advanceKnockoutPhase() {
   const winners = state.campaign.knockoutMatches.map(m => m.winner);
-
   if (state.campaign.phase === 'round16') {
     state.campaign.phase = 'quarterfinals';
     state.campaign.knockoutMatches = [];
@@ -574,7 +515,6 @@ function advanceKnockoutPhase() {
     showChampionScreen();
     return;
   }
-
   simulateKnockoutRound();
 }
 
@@ -582,27 +522,41 @@ function showChampionScreen() {
   const list = document.getElementById('fixtures-list');
   list.innerHTML = '';
   const champion = state.campaign.champion;
-  const championContainer = document.createElement('div');
-  championContainer.style.cssText = `text-align: center; padding: 60px 40px; background: linear-gradient(135deg, #d2bb57 0%, #ef3d28 100%); border-radius: 8px; color: white;`;
-  championContainer.innerHTML = `
-    <div style="font-size: 80px; margin-bottom: 20px;">${champion.flag}</div>
-    <h2 style="font-size: 48px; margin: 0 0 20px 0; font-weight: 900;">CAMPEÃO!</h2>
-    <p style="font-size: 32px; margin: 0 0 10px 0; font-weight: 800;">${champion.name}</p>
-    ${champion.isUser ? '<p style="font-size: 24px; margin-top: 20px; font-weight: 900;">🏆 VOCÊ GANHOU A COPA! 🏆</p>' : ''}
+  const card = document.createElement('div');
+  card.className = 'champion-card-final';
+  card.innerHTML = `
+    <div class="champion-trophy">🏆</div>
+    <div class="champion-name-big">${champion.flag} ${champion.name}</div>
+    <div class="champion-title">CAMPEÃO DA COPA DO MUNDO</div>
+    <div class="champion-players-list">
+      ${champion.players.map(p => `<div class="champ-player-item ${champion.scorers.includes(p.name) ? 'gold-text' : ''}">${p.name}</div>`).join('')}
+    </div>
+    <div class="stats-buttons-row">
+      <button onclick="showStats('scorers')" class="stats-btn">ARTILHARIA</button>
+      <button onclick="showStats('assists')" class="stats-btn">ASSISTÊNCIAS</button>
+    </div>
+    <button onclick="location.reload()" class="restart-btn">NOVO TORNEIO</button>
   `;
-  list.appendChild(championContainer);
-  document.getElementById('next-round-btn').textContent = 'NOVO TORNEIO';
-  document.getElementById('next-round-btn').onclick = () => location.reload();
+  list.appendChild(card);
+  document.getElementById('groups-panel').classList.add('hidden');
+  document.getElementById('next-round-btn').classList.add('hidden');
 }
+
+window.showStats = function(type) {
+  const stats = state.campaign.stats[type];
+  const sorted = Object.entries(stats).sort((a, b) => b[1] - a[1]).slice(0, 10);
+  const title = type === 'scorers' ? 'ARTILHARIA' : 'ASSISTÊNCIAS';
+  const listHtml = sorted.map(([name, count], i) => `<div>${i+1}. ${name} - ${count}</div>`).join('');
+  const modal = document.createElement('div');
+  modal.className = 'stats-modal';
+  modal.innerHTML = `<div class="modal-content"><h3>${title}</h3><div class="modal-list">${listHtml}</div><button onclick="this.parentElement.parentElement.remove()" class="close-btn">FECHAR</button></div>`;
+  document.body.appendChild(modal);
+};
 
 document.getElementById('next-round-btn').addEventListener('click', () => {
   if (state.campaign.phase === 'groups') {
-    if (state.campaign.currentRound < 3) {
-      state.campaign.currentRound++;
-      simulateRound();
-    } else {
-      startKnockoutPhase();
-    }
+    if (state.campaign.currentRound < 3) { state.campaign.currentRound++; simulateRound(); }
+    else startKnockoutPhase();
   } else if (state.campaign.phase !== 'finished') {
     advanceKnockoutPhase();
   }

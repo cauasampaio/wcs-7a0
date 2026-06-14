@@ -440,6 +440,7 @@ function renderGroups() {
 }
 
 function startKnockoutPhase() {
+  document.getElementById('campaign-layout').classList.add('knockout-mode');
   state.campaign.qualifiedTeams = [];
   state.campaign.groups.forEach(group => {
     const sorted = [...group.teams].sort((a, b) => (b.pts - a.pts) || ((b.gp - b.gc) - (a.gp - a.gc)) || (b.gp - a.gp));

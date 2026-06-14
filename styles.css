@@ -131,7 +131,10 @@ button { color: inherit; font: inherit; cursor: pointer; background: transparent
 .support-button { padding: 13px 20px; border: 2px solid var(--ink); border-radius: 999px; color: #fff; background: var(--red); box-shadow: 2px 3px 0 #161513; font-size: 11px; font-weight: 900; }
 
 /* Campaign Layout */
-.campaign-layout { padding: 40px; max-width: 1200px; margin: 0 auto; min-height: 80vh; }
+.campaign-layout { padding: 40px; max-width: 1200px; margin: 0 auto; min-height: 80vh; transition: all 0.5s ease; }
+.campaign-layout.knockout-mode { max-width: 800px; }
+.campaign-layout.knockout-mode .campaign-content { grid-template-columns: 1fr; }
+.campaign-layout.knockout-mode .campaign-header, .campaign-layout.knockout-mode .campaign-action-top { text-align: center; display: flex; flex-direction: column; align-items: center; }
 .campaign-header { text-align: center; margin-bottom: 20px; }
 .campaign-header h1 { font-size: 48px; font-weight: 900; margin: 0; }
 .campaign-info { font-size: 14px; font-weight: 700; letter-spacing: 0.2em; color: #67604e; margin-bottom: 20px; }
@@ -144,7 +147,7 @@ button { color: inherit; font: inherit; cursor: pointer; background: transparent
 .match-container { margin-bottom: 15px; border-radius: 4px; overflow: hidden; background: #f1ede1; border: 1px solid rgba(0,0,0,0.05); }
 .user-match-highlight { border: 2px solid var(--green); box-shadow: 0 0 15px rgba(44, 116, 74, 0.2); }
 
-.fixture-item { padding: 15px 20px; display: flex; align-items: center; gap: 15px; font-size: 16px; font-weight: 800; }
+.fixture-item { padding: 15px 20px; display: flex; align-items: center; gap: 15px; font-size: 13px; font-weight: 800; }
 .fixture-team { flex: 1; display: flex; align-items: center; gap: 8px; }
 .fixture-team.t2 { justify-content: flex-end; }
 .team-user { color: var(--green); font-weight: 900; }

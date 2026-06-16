@@ -5,6 +5,7 @@ const state = {
   selectedPlayers: {}, // { indexNoCampo: { jogadorData } }
   currentTeam: null,
   pendingPlayer: null,
+  rollsRemaining: 5,
   campaign: {
     groups: [],
     currentRound: 1,
@@ -111,12 +112,9 @@ function handleFieldClick(index, role) {
 
       const count = Object.keys(state.selectedPlayers).length;
       if (count < 11) {
-        rollTeam();
-        showSelectionList();
+        rollTeam(true); 
       } else {
-        selectionPanel.classList.add('hidden');
-        configPanel.classList.remove('hidden');
-        launchButton.classList.add('pulse-animation');
+        showFinalLaunchButton();
       }
     } else {
       const btn = pitch.querySelector(`.player[data-index="${index}"]`);
@@ -127,20 +125,84 @@ function handleFieldClick(index, role) {
   }
 }
 
+function showFinalLaunchButton() {
+  selectionPanel.classList.add('hidden');
+  configPanel.classList.remove('hidden');
+  
+  // Limpa o painel de configuração e deixa apenas o botão de iniciar campeonato
+  configPanel.innerHTML = `
+    <div style="text-align: center; padding: 40px 20px;">
+      <h2 style="font-size: 18px; margin-bottom: 20px;">ELENCO COMPLETO!</h2>
+      <button id="start-tournament-btn" class="launch-button pulse-animation" style="height: 100px; font-size: 24px;">
+        INICIAR CAMPEONATO 🏆
+      </button>
+    </div>
+  `;
+  
+  document.getElementById('start-tournament-btn').addEventListener('click', startCampaign);
+}
+
 function openSelection() {
   configPanel.classList.add('hidden');
   selectionPanel.classList.remove('hidden');
-  if (!state.currentTeam) rollTeam();
-  showSelectionList();
+  if (!state.currentTeam) rollTeam(true);
+  else showSelectionList();
 }
 
-function rollTeam() {
-  const randomIndex = Math.floor(Math.random() * teamsData.length);
-  state.currentTeam = teamsData[randomIndex];
-  teamFlag.textContent = state.currentTeam.flag || '🏳️';
-  teamName.textContent = state.currentTeam.name;
+function rollTeam(isFree = false) {
+  if (!isFree && state.rollsRemaining <= 0) return;
+  if (!isFree) state.rollsRemaining--;
+
   state.pendingPlayer = null;
   document.querySelectorAll('.player').forEach(p => p.classList.remove('active-slot'));
+  playerSelectionList.innerHTML = '';
+  updateRollButtons();
+
+  const duration = 600;
+  const intervalTime = 50;
+  const steps = duration / intervalTime;
+  let currentStep = 0;
+
+  const animationInterval = setInterval(() => {
+    const tempIndex = Math.floor(Math.random() * teamsData.length);
+    const tempTeam = teamsData[tempIndex];
+    teamFlag.textContent = tempTeam.flag || '🏳️';
+    teamName.textContent = tempTeam.name;
+    teamName.style.opacity = '0.7';
+    
+    currentStep++;
+    if (currentStep >= steps) {
+      clearInterval(animationInterval);
+      const randomIndex = Math.floor(Math.random() * teamsData.length);
+      state.currentTeam = teamsData[randomIndex];
+      teamFlag.textContent = state.currentTeam.flag || '🏳️';
+      teamName.textContent = state.currentTeam.name;
+      teamName.style.opacity = '1';
+      showSelectionList();
+      updateRollButtons();
+    }
+  }, intervalTime);
+}
+
+function updateRollButtons() {
+  const rollArea = document.getElementById('roll-action-area');
+  if (!rollArea) {
+    const area = document.createElement('div');
+    area.id = 'roll-action-area';
+    area.style.marginTop = '20px';
+    area.style.textAlign = 'center';
+    selectionPanel.appendChild(area);
+  }
+  
+  const area = document.getElementById('roll-action-area');
+  area.innerHTML = `
+    <div style="font-size: 10px; font-weight: 900; margin-bottom: 10px; color: var(--muted)">
+      TROCAS RESTANTES: <span style="color: var(--red)">${state.rollsRemaining}</span>
+    </div>
+    <button onclick="rollTeam()" class="launch-button" style="height: 50px; font-size: 16px; ${state.rollsRemaining <= 0 ? 'background: #ccc; cursor: not-allowed;' : ''}" ${state.rollsRemaining <= 0 ? 'disabled' : ''}>
+      OUTRA SELEÇÃO 🎲
+    </button>
+  `;
 }
 
 function showSelectionList() {
@@ -222,10 +284,9 @@ launchButton.addEventListener('click', () => {
     startCampaign();
     return;
   }
-  rollTeam();
+  rollTeam(true); 
   configPanel.classList.add('hidden');
   selectionPanel.classList.remove('hidden');
-  showSelectionList();
 });
 
 // --- Lógica de Campanha ---

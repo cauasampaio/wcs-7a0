@@ -91,8 +91,15 @@ function updatePlayersPosition() {
       btn.disabled = false;
     } else {
       // Se já houver um jogador, verifica se ele ainda é compatível com a nova role
-      const isCompatible = (saved.roles && saved.roles.includes(data.role)) || 
-                           (posMap[saved.pos] && posMap[saved.pos].includes(data.role));
+      let compatibleRoles = saved.roles || [];
+      
+      // Se o jogador não tem roles e tem uma posição (pos), usa o posMap
+      if (compatibleRoles.length === 0 && saved.pos) {
+        compatibleRoles = posMap[saved.pos] || [];
+      }
+      
+      // Se ainda não tem roles, permite (não deleta)
+      const isCompatible = compatibleRoles.length === 0 || compatibleRoles.includes(data.role);
       
       if (!isCompatible) {
         // Se não for compatível, remove o jogador (punição por mudar tática com time pronto)
@@ -114,11 +121,14 @@ function updatePlayersPosition() {
 
 function handleFieldClick(index, role) {
   if (state.pendingPlayer) {
-    let compatibleRoles = state.pendingPlayer.roles || [];
-    if (compatibleRoles.length === 1 && compatibleRoles[0] === 'DC' && state.pendingPlayer.pos && state.pendingPlayer.pos !== 'A') {
-      compatibleRoles = posMap[state.pendingPlayer.pos] || ['DC'];
-    } else if (compatibleRoles.length === 0 && state.pendingPlayer.pos) {
-      compatibleRoles = posMap[state.pendingPlayer.pos] || [];
+    const pIdx = state.currentTeam.players.findIndex(p => p.name === state.pendingPlayer.name);
+    let compatibleRoles = state.pendingPlayer.roles || (pIdx === 0 && state.currentTeam.roles ? state.currentTeam.roles : []);
+    const playerPos = state.pendingPlayer.pos || (pIdx === 0 && state.currentTeam.pos ? state.currentTeam.pos : null);
+
+    if (compatibleRoles.length === 1 && compatibleRoles[0] === 'DC' && playerPos && playerPos !== 'A') {
+      compatibleRoles = posMap[playerPos] || ['DC'];
+    } else if (compatibleRoles.length === 0 && playerPos) {
+      compatibleRoles = posMap[playerPos] || [];
     }
     const isCompatible = compatibleRoles && compatibleRoles.includes(role);
     if (isCompatible) {
@@ -144,6 +154,7 @@ function handleFieldClick(index, role) {
 }
 
 function showFinalLaunchButton() {
+  // BUG FIX #2: Garantir que o botão de iniciar torneio apareça corretamente
   // Esconde os painéis existentes
   configPanel.classList.add('hidden');
   selectionPanel.classList.add('hidden');
@@ -159,7 +170,13 @@ function showFinalLaunchButton() {
     </div>
   `;
   
-  document.getElementById('start-tournament-btn').addEventListener('click', startCampaign);
+  // Aguarda um frame para garantir que o elemento foi renderizado antes de adicionar o listener
+  requestAnimationFrame(() => {
+    const btn = document.getElementById('start-tournament-btn');
+    if (btn) {
+      btn.addEventListener('click', startCampaign);
+    }
+  });
 }
 
 function openSelection() {
@@ -236,10 +253,10 @@ function updateRollButtons() {
     </div>
     <div style="display: flex; gap: 10px; justify-content: center;">
       <button onclick="rollTeam(false, 'year')" class="launch-button" style="height: 50px; font-size: 12px; flex: 1; ${disabledStyle}" ${disabledAttr}>
-        OUTRA SELEÇÃO 🎲<br><span style="font-size: 9px; opacity: 0.8;">(MESMO ANO)</span>
+        TROCA TIME 🎲<br><span style="font-size: 9px; opacity: 0.8;"></span>
       </button>
       <button onclick="rollTeam(false, 'country')" class="launch-button" style="height: 50px; font-size: 12px; flex: 1; ${disabledStyle}" ${disabledAttr}>
-        TROCAR COPA 🏆<br><span style="font-size: 9px; opacity: 0.8;">(MESMO PAÍS)</span>
+        TROCAR COPA 🏆<br><span style="font-size: 9px; opacity: 0.8;"></span>
       </button>
     </div>
   `;
@@ -264,17 +281,39 @@ function getFilledRoles() {
   return fullRoles;
 }
 
-function isPlayerBlocked(player, filledRoles) {
+function isPlayerBlocked(player, filledRoles, pIdx) {
+  // BUG FIX #1: Verificar se há vagas disponíveis para o jogador
+  const playersData = formationsData[state.formation][state.style] || formationsData[state.formation]['Equilibrado'];
+  
   let compatibleRoles = player.roles || [];
-  if (compatibleRoles.length === 1 && compatibleRoles[0] === 'DC' && player.pos && player.pos !== 'A') {
-    compatibleRoles = posMap[player.pos] || ['DC'];
-  } else if (compatibleRoles.length === 0 && player.pos) {
-    compatibleRoles = posMap[player.pos] || [];
+  
+  // Se o jogador não tem roles explícitas e é o primeiro jogador (pIdx === 0), 
+  // tenta usar as roles do time como fallback
+  if (compatibleRoles.length === 0 && pIdx === 0 && state.currentTeam && state.currentTeam.roles) {
+    compatibleRoles = state.currentTeam.roles;
   }
   
+  // Se ainda não tem roles compatíveis, retorna false (não bloqueado)
   if (!compatibleRoles || compatibleRoles.length === 0) return false;
-  // O jogador está bloqueado se TODOS os roles compatíveis com sua posição estão preenchidos
-  return compatibleRoles.every(role => filledRoles.has(role));
+  
+  // Contar quantas vagas totais existem para cada role compatível
+  const roleAvailable = {};
+  playersData.forEach((data, index) => {
+    if (compatibleRoles.includes(data.role)) {
+      roleAvailable[data.role] = (roleAvailable[data.role] || 0) + 1;
+    }
+  });
+  
+  // Contar quantas vagas já foram preenchidas para cada role compatível
+  const roleFilled = {};
+  playersData.forEach((data, index) => {
+    if (compatibleRoles.includes(data.role) && state.selectedPlayers[index]) {
+      roleFilled[data.role] = (roleFilled[data.role] || 0) + 1;
+    }
+  });
+  
+  // O jogador está bloqueado APENAS se TODOS os roles compatíveis estão COMPLETAMENTE preenchidos
+  return compatibleRoles.every(role => (roleFilled[role] || 0) >= (roleAvailable[role] || 0));
 }
 
 function showSelectionList() {
@@ -294,24 +333,29 @@ function showSelectionList() {
     };
 
     let displayPos = '—';
-    if (player.roles && player.roles.length > 0) {
+    
+    // Tenta obter as roles do jogador ou da equipe (como fallback)
+    const playerRoles = player.roles || (pIdx === 0 && state.currentTeam.roles ? state.currentTeam.roles : []);
+    const playerPos = player.pos || (pIdx === 0 && state.currentTeam.pos ? state.currentTeam.pos : null);
+
+    if (playerRoles && playerRoles.length > 0) {
       // Se o jogador tem roles específicas, usa o mapeamento
-      displayPos = player.roles.map(r => reverseMap[r] || r).join('/');
-    } else if (player.pos) {
+      displayPos = playerRoles.map(r => reverseMap[r] || r).join('/');
+    } else if (playerPos) {
       // Se não tem roles, mas tem uma categoria (pos), tenta mapear a categoria
       const posDisplayMap = { 'GR': 'GL', 'D': 'DF', 'M': 'MC', 'A': 'AT' };
-      displayPos = posDisplayMap[player.pos] || player.pos;
+      displayPos = posDisplayMap[playerPos] || playerPos;
     }
 
     // Se a única role for DC, mas o jogador for originalmente de outra posição (ex: D ou M),
     // vamos tentar inferir uma posição mais genérica para não exibir ATA para todos.
-    if (player.roles && player.roles.length === 1 && player.roles[0] === 'DC' && player.pos && player.pos !== 'A') {
+    if (playerRoles && playerRoles.length === 1 && playerRoles[0] === 'DC' && playerPos && playerPos !== 'A') {
         const posToRole = { 'GR': 'GL', 'D': 'DF', 'M': 'MC' };
-        displayPos = posToRole[player.pos] || displayPos;
+        displayPos = posToRole[playerPos] || displayPos;
     }
     li.innerHTML = `<span class="player-num">${pIdx + 1}</span><span class="player-name">${player.name}</span><span class="player-pos" style="font-size: 7px; color: var(--red);">${displayPos}</span><span class="player-ovr">${player.ovr}</span>`;
 
-    if (isPlayerBlocked(player, filledRoles)) {
+    if (isPlayerBlocked(player, filledRoles, pIdx)) {
       li.classList.add('player-item--blocked');
     } else {
       li.addEventListener('click', () => {
@@ -327,15 +371,19 @@ function showSelectionList() {
 }
 
 function highlightCompatibleSlots(player) {
+  // Tenta encontrar o índice do jogador na lista atual para aplicar o fallback se necessário
+  const pIdx = state.currentTeam.players.findIndex(p => p.name === player.name);
+  
   // Se o jogador tiver roles específicas no data.js, ele só pode jogar nessas posições.
   // Caso contrário, usamos o posMap baseado na categoria (pos).
   // Se ele tiver apenas ["DC"] mas for de outra categoria (pos), permitimos que ele jogue em qualquer lugar da categoria.
-  let compatibleRoles = player.roles || [];
+  let compatibleRoles = player.roles || (pIdx === 0 && state.currentTeam.roles ? state.currentTeam.roles : []);
+  const playerPos = player.pos || (pIdx === 0 && state.currentTeam.pos ? state.currentTeam.pos : null);
   
-  if (compatibleRoles.length === 1 && compatibleRoles[0] === 'DC' && player.pos && player.pos !== 'A') {
-    compatibleRoles = posMap[player.pos] || ['DC'];
-  } else if (compatibleRoles.length === 0 && player.pos) {
-    compatibleRoles = posMap[player.pos] || [];
+  if (compatibleRoles.length === 1 && compatibleRoles[0] === 'DC' && playerPos && playerPos !== 'A') {
+    compatibleRoles = posMap[playerPos] || ['DC'];
+  } else if (compatibleRoles.length === 0 && playerPos) {
+    compatibleRoles = posMap[playerPos] || [];
   }
 
   document.querySelectorAll('.player').forEach(btn => {
@@ -477,7 +525,7 @@ function simulateRound() {
         if (state.campaign.currentRound === 3) document.getElementById('next-round-btn').textContent = 'INICIAR MATA-MATA';
       }
     }
-  }, 100);
+  }, 300);
 }
 
 function renderLiveMatches(matches, currentMinute) {
@@ -496,6 +544,16 @@ function renderLiveMatches(matches, currentMinute) {
     const isUserMatch = m.t1.isUser || m.t2.isUser;
     const matchContainer = document.createElement('div');
     matchContainer.className = `match-container ${isUserMatch ? 'user-match-highlight' : ''}`;
+    
+    // BUG FIX / ADDON: Efeito de zoom quando o usuário marca gol
+    const userScoredNow = visibleEvents.some(e => e.min === currentMinute && e.isUser);
+    if (userScoredNow) {
+      matchContainer.classList.add('goal-animation-active');
+      // Remove a classe após a animação para poder repetir se houver outro gol
+      setTimeout(() => {
+        matchContainer.classList.remove('goal-animation-active');
+      }, 1000);
+    }
 
     const t1Class = m.t1.isUser ? 'team-user' : (isUserMatch ? 'team-opponent' : '');
     const t2Class = m.t2.isUser ? 'team-user' : (isUserMatch ? 'team-opponent' : '');
@@ -666,7 +724,7 @@ function simulateKnockoutRound() {
       const phaseNames = { 'round16': 'QUARTAS DE FINAL', 'quarterfinals': 'SEMIFINAL', 'semifinals': 'FINAL', 'final': 'CAMPEÃO' };
       document.getElementById('next-round-btn').textContent = phaseNames[state.campaign.phase];
     }
-  }, 100);
+  }, 200);
 }
 
 function advanceKnockoutPhase() {

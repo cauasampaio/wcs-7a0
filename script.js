@@ -25,7 +25,7 @@ const state = {
 const posMap = {
   'GR': ['POR'],
   'D': ['LI', 'LD', 'DFC'],
-  'M': ['VOL', 'MC', 'MEI', 'ME', 'MD'],
+  'M': ['VOL', 'MC', 'MLG', 'MAT', 'MEI', 'ME', 'MD'],
   'A': ['EI', 'DE', 'DC']
 };
 
@@ -44,7 +44,7 @@ const avgDefenseEl = document.getElementById('avg-defense');
 const totalAvgEl = document.getElementById('total-avg');
 
 function initPlayers() {
-  const playersData = formationsData[state.formation];
+  const playersData = formationsData[state.formation][state.style] || formationsData[state.formation]['Equilibrado'];
   const currentPlayers = pitch.querySelectorAll('.player');
   currentPlayers.forEach(p => p.remove());
 
@@ -73,18 +73,13 @@ function initPlayers() {
 }
 
 function updatePlayersPosition() {
-  const playersData = formationsData[state.formation];
+  const playersData = formationsData[state.formation][state.style] || formationsData[state.formation]['Equilibrado'];
   const playerButtons = pitch.querySelectorAll('.player');
-
-  let verticalOffset = 0;
-  if (state.style === 'Ofensiva') verticalOffset = -8;
-  else if (state.style === 'Defensiva') verticalOffset = 8;
 
   playerButtons.forEach((btn, index) => {
     const data = playersData[index];
-    const offset = data.role === 'POR' ? verticalOffset * 0.3 : verticalOffset;
     
-    btn.style.top = `${data.top + offset}%`;
+    btn.style.top = `${data.top}%`;
     btn.style.left = `${data.left}%`;
     btn.dataset.role = data.role;
     
@@ -94,15 +89,38 @@ function updatePlayersPosition() {
       btn.innerHTML = data.role;
       btn.classList.remove('selected');
       btn.disabled = false;
+    } else {
+      // Se já houver um jogador, verifica se ele ainda é compatível com a nova role
+      const isCompatible = (saved.roles && saved.roles.includes(data.role)) || 
+                           (posMap[saved.pos] && posMap[saved.pos].includes(data.role));
+      
+      if (!isCompatible) {
+        // Se não for compatível, remove o jogador (punição por mudar tática com time pronto)
+        delete state.selectedPlayers[index];
+        btn.classList.remove('selected');
+        btn.textContent = data.role;
+        btn.innerHTML = data.role;
+        btn.disabled = false;
+      } else {
+        // Se for compatível, apenas atualiza o visual se necessário
+        btn.innerHTML = `<div class="player-ovr-small">${saved.ovr}</div><span>${saved.name.split(' ').pop()}</span>`;
+      }
     }
   });
 
   updateRoleList();
+  updateSummary();
 }
 
 function handleFieldClick(index, role) {
   if (state.pendingPlayer) {
-    const isCompatible = posMap[state.pendingPlayer.pos].includes(role);
+    let compatibleRoles = state.pendingPlayer.roles || [];
+    if (compatibleRoles.length === 1 && compatibleRoles[0] === 'DC' && state.pendingPlayer.pos && state.pendingPlayer.pos !== 'A') {
+      compatibleRoles = posMap[state.pendingPlayer.pos] || ['DC'];
+    } else if (compatibleRoles.length === 0 && state.pendingPlayer.pos) {
+      compatibleRoles = posMap[state.pendingPlayer.pos] || [];
+    }
+    const isCompatible = compatibleRoles && compatibleRoles.includes(role);
     if (isCompatible) {
       state.selectedPlayers[index] = state.pendingPlayer;
       state.pendingPlayer = null;
@@ -126,14 +144,16 @@ function handleFieldClick(index, role) {
 }
 
 function showFinalLaunchButton() {
+  // Esconde os painéis existentes
+  configPanel.classList.add('hidden');
   selectionPanel.classList.add('hidden');
-  configPanel.classList.remove('hidden');
   
-  // Limpa o painel de configuração e deixa apenas o botão de iniciar campeonato
-  configPanel.innerHTML = `
-    <div style="text-align: center; padding: 40px 20px;">
-      <h2 style="font-size: 18px; margin-bottom: 20px;">ELENCO COMPLETO!</h2>
-      <button id="start-tournament-btn" class="launch-button pulse-animation" style="height: 100px; font-size: 24px;">
+  // Limpa a barra lateral (setup-panel) e insere o botão de iniciar campeonato
+  const setupPanel = document.querySelector('.setup-panel');
+  setupPanel.innerHTML = `
+    <div style="text-align: center; padding: 40px 20px; display: flex; flex-direction: column; justify-content: center; height: 100%; min-height: 400px;">
+      <h2 style="font-size: 22px; margin-bottom: 20px; font-family: 'Archivo Black', sans-serif; color: white;">ELENCO COMPLETO!</h2>
+      <button id="start-tournament-btn" class="launch-button pulse-animation" style="height: 120px; font-size: 24px; background: #00ff00; color: black; border: 4px solid black; cursor: pointer; font-weight: 900;">
         INICIAR CAMPEONATO 🏆
       </button>
     </div>
@@ -149,8 +169,21 @@ function openSelection() {
   else showSelectionList();
 }
 
-function rollTeam(isFree = false) {
+function rollTeam(isFree = false, filterType = null) {
   if (!isFree && state.rollsRemaining <= 0) return;
+  
+  let pool = teamsData;
+  
+  if (filterType === 'year' && state.currentTeam) {
+    const currentYear = state.currentTeam.name.split(' ').pop();
+    pool = teamsData.filter(t => t.name.endsWith(currentYear) && t.name !== state.currentTeam.name);
+    if (pool.length === 0) pool = teamsData; // Fallback se não houver outros no mesmo ano
+  } else if (filterType === 'country' && state.currentTeam) {
+    const currentCountry = state.currentTeam.name.split(' ')[0];
+    pool = teamsData.filter(t => t.name.startsWith(currentCountry) && t.name !== state.currentTeam.name);
+    if (pool.length === 0) pool = teamsData; // Fallback se não houver outras copas do mesmo país
+  }
+
   if (!isFree) state.rollsRemaining--;
 
   state.pendingPlayer = null;
@@ -164,8 +197,8 @@ function rollTeam(isFree = false) {
   let currentStep = 0;
 
   const animationInterval = setInterval(() => {
-    const tempIndex = Math.floor(Math.random() * teamsData.length);
-    const tempTeam = teamsData[tempIndex];
+    const tempIndex = Math.floor(Math.random() * pool.length);
+    const tempTeam = pool[tempIndex];
     teamFlag.textContent = tempTeam.flag || '🏳️';
     teamName.textContent = tempTeam.name;
     teamName.style.opacity = '0.7';
@@ -173,8 +206,8 @@ function rollTeam(isFree = false) {
     currentStep++;
     if (currentStep >= steps) {
       clearInterval(animationInterval);
-      const randomIndex = Math.floor(Math.random() * teamsData.length);
-      state.currentTeam = teamsData[randomIndex];
+      const randomIndex = Math.floor(Math.random() * pool.length);
+      state.currentTeam = pool[randomIndex];
       teamFlag.textContent = state.currentTeam.flag || '🏳️';
       teamName.textContent = state.currentTeam.name;
       teamName.style.opacity = '1';
@@ -185,46 +218,126 @@ function rollTeam(isFree = false) {
 }
 
 function updateRollButtons() {
-  const rollArea = document.getElementById('roll-action-area');
-  if (!rollArea) {
-    const area = document.createElement('div');
+  let area = document.getElementById('roll-action-area');
+  if (!area) {
+    area = document.createElement('div');
     area.id = 'roll-action-area';
     area.style.marginTop = '20px';
     area.style.textAlign = 'center';
     selectionPanel.appendChild(area);
   }
   
-  const area = document.getElementById('roll-action-area');
+  const disabledAttr = state.rollsRemaining <= 0 ? 'disabled' : '';
+  const disabledStyle = state.rollsRemaining <= 0 ? 'background: #ccc; cursor: not-allowed;' : '';
+  
   area.innerHTML = `
     <div style="font-size: 10px; font-weight: 900; margin-bottom: 10px; color: var(--muted)">
       TROCAS RESTANTES: <span style="color: var(--red)">${state.rollsRemaining}</span>
     </div>
-    <button onclick="rollTeam()" class="launch-button" style="height: 50px; font-size: 16px; ${state.rollsRemaining <= 0 ? 'background: #ccc; cursor: not-allowed;' : ''}" ${state.rollsRemaining <= 0 ? 'disabled' : ''}>
-      OUTRA SELEÇÃO 🎲
-    </button>
+    <div style="display: flex; gap: 10px; justify-content: center;">
+      <button onclick="rollTeam(false, 'year')" class="launch-button" style="height: 50px; font-size: 12px; flex: 1; ${disabledStyle}" ${disabledAttr}>
+        OUTRA SELEÇÃO 🎲<br><span style="font-size: 9px; opacity: 0.8;">(MESMO ANO)</span>
+      </button>
+      <button onclick="rollTeam(false, 'country')" class="launch-button" style="height: 50px; font-size: 12px; flex: 1; ${disabledStyle}" ${disabledAttr}>
+        TROCAR COPA 🏆<br><span style="font-size: 9px; opacity: 0.8;">(MESMO PAÍS)</span>
+      </button>
+    </div>
   `;
+}
+
+function getFilledRoles() {
+  const playersData = formationsData[state.formation][state.style] || formationsData[state.formation]['Equilibrado'];
+  // Conta quantos slots existem e quantos estão preenchidos para cada role
+  const roleTotal = {};
+  const roleFilled = {};
+  playersData.forEach((data, index) => {
+    roleTotal[data.role] = (roleTotal[data.role] || 0) + 1;
+    if (state.selectedPlayers[index]) {
+      roleFilled[data.role] = (roleFilled[data.role] || 0) + 1;
+    }
+  });
+  // Retorna o conjunto de roles completamente preenchidos
+  const fullRoles = new Set();
+  Object.keys(roleTotal).forEach(role => {
+    if ((roleFilled[role] || 0) >= roleTotal[role]) fullRoles.add(role);
+  });
+  return fullRoles;
+}
+
+function isPlayerBlocked(player, filledRoles) {
+  let compatibleRoles = player.roles || [];
+  if (compatibleRoles.length === 1 && compatibleRoles[0] === 'DC' && player.pos && player.pos !== 'A') {
+    compatibleRoles = posMap[player.pos] || ['DC'];
+  } else if (compatibleRoles.length === 0 && player.pos) {
+    compatibleRoles = posMap[player.pos] || [];
+  }
+  
+  if (!compatibleRoles || compatibleRoles.length === 0) return false;
+  // O jogador está bloqueado se TODOS os roles compatíveis com sua posição estão preenchidos
+  return compatibleRoles.every(role => filledRoles.has(role));
 }
 
 function showSelectionList() {
   playerSelectionList.innerHTML = '';
   if (!state.currentTeam) return;
 
+  const filledRoles = getFilledRoles();
+
   state.currentTeam.players.forEach((player, pIdx) => {
     const li = document.createElement('li');
     li.className = 'player-item';
-    li.innerHTML = `<span class="player-num">${pIdx + 1}</span><span class="player-name">${player.name}</span><span class="player-pos">${player.pos}</span><span class="player-ovr">${player.ovr}</span>`;
-    li.addEventListener('click', () => {
-      state.pendingPlayer = player;
-      document.querySelectorAll('.player-item').forEach(item => item.classList.remove('active-selection'));
-      li.classList.add('active-selection');
-      highlightCompatibleSlots(player.pos);
-    });
+    // Mapeamento inverso para exibição amigável na lista (Sistema -> SoFIFA/Comum)
+    const reverseMap = {
+      'POR': 'GL', 'DFC': 'ZAG', 'LI': 'LE', 'LD': 'LD',
+      'VOL': 'VOL', 'MLG': 'MC', 'MAT': 'MEI', 'MEI': 'MEI', 'ME': 'ME', 'MD': 'MD',
+      'EI': 'PE', 'DE': 'PD', 'DC': 'ATA'
+    };
+
+    let displayPos = '—';
+    if (player.roles && player.roles.length > 0) {
+      // Se o jogador tem roles específicas, usa o mapeamento
+      displayPos = player.roles.map(r => reverseMap[r] || r).join('/');
+    } else if (player.pos) {
+      // Se não tem roles, mas tem uma categoria (pos), tenta mapear a categoria
+      const posDisplayMap = { 'GR': 'GL', 'D': 'DF', 'M': 'MC', 'A': 'AT' };
+      displayPos = posDisplayMap[player.pos] || player.pos;
+    }
+
+    // Se a única role for DC, mas o jogador for originalmente de outra posição (ex: D ou M),
+    // vamos tentar inferir uma posição mais genérica para não exibir ATA para todos.
+    if (player.roles && player.roles.length === 1 && player.roles[0] === 'DC' && player.pos && player.pos !== 'A') {
+        const posToRole = { 'GR': 'GL', 'D': 'DF', 'M': 'MC' };
+        displayPos = posToRole[player.pos] || displayPos;
+    }
+    li.innerHTML = `<span class="player-num">${pIdx + 1}</span><span class="player-name">${player.name}</span><span class="player-pos" style="font-size: 7px; color: var(--red);">${displayPos}</span><span class="player-ovr">${player.ovr}</span>`;
+
+    if (isPlayerBlocked(player, filledRoles)) {
+      li.classList.add('player-item--blocked');
+    } else {
+      li.addEventListener('click', () => {
+        state.pendingPlayer = player;
+        document.querySelectorAll('.player-item').forEach(item => item.classList.remove('active-selection'));
+        li.classList.add('active-selection');
+        highlightCompatibleSlots(player);
+      });
+    }
+
     playerSelectionList.appendChild(li);
   });
 }
 
-function highlightCompatibleSlots(playerPos) {
-  const compatibleRoles = posMap[playerPos];
+function highlightCompatibleSlots(player) {
+  // Se o jogador tiver roles específicas no data.js, ele só pode jogar nessas posições.
+  // Caso contrário, usamos o posMap baseado na categoria (pos).
+  // Se ele tiver apenas ["DC"] mas for de outra categoria (pos), permitimos que ele jogue em qualquer lugar da categoria.
+  let compatibleRoles = player.roles || [];
+  
+  if (compatibleRoles.length === 1 && compatibleRoles[0] === 'DC' && player.pos && player.pos !== 'A') {
+    compatibleRoles = posMap[player.pos] || ['DC'];
+  } else if (compatibleRoles.length === 0 && player.pos) {
+    compatibleRoles = posMap[player.pos] || [];
+  }
+
   document.querySelectorAll('.player').forEach(btn => {
     const role = btn.dataset.role;
     const isFilled = state.selectedPlayers[btn.dataset.index];
@@ -234,7 +347,7 @@ function highlightCompatibleSlots(playerPos) {
 }
 
 function updateRoleList() {
-  const playersData = formationsData[state.formation];
+  const playersData = formationsData[state.formation][state.style] || formationsData[state.formation]['Equilibrado'];
   roleList.innerHTML = '';
   playersData.forEach((data, index) => {
     const li = document.createElement('li');
@@ -287,6 +400,7 @@ launchButton.addEventListener('click', () => {
   rollTeam(true); 
   configPanel.classList.add('hidden');
   selectionPanel.classList.remove('hidden');
+  launchButton.style.display = 'none'; // Esconde o botão após o primeiro clique
 });
 
 // --- Lógica de Campanha ---

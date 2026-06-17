@@ -63,6 +63,8 @@ button { color: inherit; font: inherit; cursor: pointer; background: transparent
 .player-pos { font-size: 10px; font-weight: 900; color: var(--muted); text-align: center; }
 .player-ovr { display: flex; align-items: center; justify-content: center; width: 28px; height: 20px; background: var(--red); color: white; font-size: 10px; font-weight: 900; border-radius: 2px; }
 .player-item.active-selection { background: rgba(239, 61, 40, 0.1); border-left: 4px solid var(--red); padding-left: 8px; }
+.player-item.player-item--blocked { opacity: 0.35; cursor: default; pointer-events: none; }
+.player-item.player-item--blocked:hover { background: transparent; }
 
 .button-grid { display: grid; gap: 10px; margin: 12px 0 24px; }
 .formations { grid-template-columns: repeat(3, 1fr); }

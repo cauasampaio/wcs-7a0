@@ -15917,42 +15917,42 @@ const teamsData = [
     "players": [
       {
         "name": "Sepp Maier",
+        "roles": [
+          "POR"
+        ],
         "ovr": 80
       },
       {
         "name": "Berti Vogts",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 87
       },
       {
         "name": "Paul Breitner",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "LD",
+          "ME",
+          "MD"
         ],
         "ovr": 83
       },
       {
         "name": "Hans-Georg Schwarzenbeck",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 78
       },
       {
         "name": "Franz Beckenbauer",
         "roles": [
-          "MC",
-          "LD",
           "DFC",
           "LI",
+          "LD",
           "VOL"
         ],
         "ovr": 93
@@ -15960,9 +15960,8 @@ const teamsData = [
       {
         "name": "Horst-Dieter Höttges",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 89
       },
@@ -15970,11 +15969,7 @@ const teamsData = [
         "name": "Herbert Wimmer",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 88
       },
@@ -15982,32 +15977,25 @@ const teamsData = [
         "name": "Bernhard Cullmann",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 80
       },
       {
         "name": "Jürgen Grabowski",
         "roles": [
-          "EI",
           "DE",
-          "DC"
+          "ME",
+          "MD"
         ],
         "ovr": 77
       },
       {
         "name": "Günter Netzer",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 77
       },
@@ -16015,7 +16003,6 @@ const teamsData = [
         "name": "Jupp Heynckes",
         "roles": [
           "EI",
-          "DE",
           "DC"
         ],
         "ovr": 83
@@ -16023,20 +16010,15 @@ const teamsData = [
       {
         "name": "Wolfgang Overath",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 80
       },
       {
         "name": "Gerd Müller",
         "roles": [
-          "EI",
-          "DE",
           "DC"
         ],
         "ovr": 93
@@ -16044,7 +16026,6 @@ const teamsData = [
       {
         "name": "Uli Hoeneß",
         "roles": [
-          "EI",
           "DE",
           "DC"
         ],
@@ -16053,12 +16034,9 @@ const teamsData = [
       {
         "name": "Heinz Flohe",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 86
       },
@@ -16066,32 +16044,24 @@ const teamsData = [
         "name": "Rainer Bonhof",
         "roles": [
           "VOL",
-          "MLG",
           "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MEI"
         ],
         "ovr": 90
       },
       {
         "name": "Bernd Hölzenbein",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "EI",
+          "DC"
         ],
         "ovr": 87
       },
       {
         "name": "Dieter Herzog",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 85
       }
@@ -16099,72 +16069,62 @@ const teamsData = [
   },
   {
     "name": "East Germany 1974",
-    "roles": [
-      "POR"
-    ],
+        "roles": [
+          "DC",
+          "EI"
+        ],
     "flag": "⚽",
     "players": [
       {
         "name": "Jürgen Croy",
+        "roles": [
+          "POR"
+        ],
         "ovr": 85
       },
       {
         "name": "Lothar Kurbjuweit",
         "roles": [
           "DFC",
-          "LI",
-          "LD"
+          "LI"
         ],
         "ovr": 80
       },
       {
         "name": "Bernd Bransch",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 86
       },
       {
         "name": "Konrad Weise",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 78
       },
       {
         "name": "Joachim Fritsche",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 85
       },
       {
         "name": "Rüdiger Schnuphase",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
           "ME",
-          "MD"
+          "MEI"
         ],
         "ovr": 89
       },
       {
         "name": "Jürgen Pommerenke",
         "roles": [
-          "VOL",
-          "MLG",
           "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MEI"
         ],
         "ovr": 84
       },
@@ -16172,44 +16132,41 @@ const teamsData = [
         "name": "Wolfram Löwe",
         "roles": [
           "EI",
-          "DE",
-          "DC"
+          "DE"
         ],
         "ovr": 75
       },
       {
         "name": "Peter Ducke",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 77
       },
       {
         "name": "Hans-Jürgen Kreische",
         "roles": [
+          "DC",
           "EI",
-          "DE",
-          "DC"
+          "DE"
         ],
         "ovr": 75
       },
       {
         "name": "Joachim Streich",
         "roles": [
+          "DC",
           "EI",
-          "DE",
-          "DC"
+          "DE"
         ],
         "ovr": 76
       },
       {
         "name": "Siegmar Wätzlich",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 86
       },
@@ -16217,44 +16174,35 @@ const teamsData = [
         "name": "Reinhard Lauck",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 79
       },
       {
         "name": "Jürgen Sparwasser",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "EI",
+          "DE"
         ],
         "ovr": 89
       },
       {
         "name": "Eberhard Vogel",
         "roles": [
+          "DC",
           "EI",
-          "DE",
-          "DC"
+          "DE"
         ],
         "ovr": 85
       },
       {
         "name": "Harald Irmscher",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 84
       },
@@ -16262,20 +16210,15 @@ const teamsData = [
         "name": "Erich Hamann",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 75
       },
       {
         "name": "Gerd Kische",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 92
       }
@@ -16290,41 +16233,39 @@ const teamsData = [
     "players": [
       {
         "name": "Jack Reilly",
+        "roles": [
+          "POR"
+        ],
         "ovr": 85
       },
       {
         "name": "Doug Utjesenovic",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 90
       },
       {
         "name": "Peter Wilson",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 79
       },
       {
         "name": "Manfred Schaefer",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 79
       },
       {
         "name": "Colin Curran",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 86
       },
@@ -16332,11 +16273,7 @@ const teamsData = [
         "name": "Ray Richards",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 85
       },
@@ -16344,23 +16281,15 @@ const teamsData = [
         "name": "Jimmy Rooney",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MEI"
         ],
         "ovr": 68
       },
       {
         "name": "Jimmy Mackay",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 68
       },
@@ -16368,38 +16297,31 @@ const teamsData = [
         "name": "Johnny Warren",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 88
       },
       {
         "name": "Garry Manuel",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 76
       },
       {
         "name": "Attila Abonyi",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 89
       },
       {
         "name": "Adrian Alston",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 60
       },
@@ -16407,50 +16329,38 @@ const teamsData = [
         "name": "Peter Ollerton",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 87
       },
       {
         "name": "Max Tolson",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 83
       },
       {
         "name": "Harry Williams",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 82
       },
       {
         "name": "Ivo Rudic",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 84
       },
       {
         "name": "Dave Harding",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "VOL",
+          "MAT"
         ],
         "ovr": 82
       },
@@ -16458,11 +16368,7 @@ const teamsData = [
         "name": "Johnny Watkiss",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 75
       }
@@ -16477,71 +16383,62 @@ const teamsData = [
     "players": [
       {
         "name": "Leopoldo Vallejos",
+        "roles": [
+          "POR"
+        ],
         "ovr": 84
       },
       {
         "name": "Rolando García",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 71
       },
       {
         "name": "Alberto Quintano",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 64
       },
       {
         "name": "Antonio Arias",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 77
       },
       {
         "name": "Elías Figueroa",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 81
       },
       {
         "name": "Juan Rodríguez",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 86
       },
       {
         "name": "Carlos Caszely",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 91
       },
       {
         "name": "Francisco Valdés",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 59
       },
@@ -16549,51 +16446,40 @@ const teamsData = [
         "name": "Sergio Ahumada",
         "roles": [
           "EI",
-          "DE",
-          "DC"
+          "DE"
         ],
         "ovr": 65
       },
       {
         "name": "Carlos Reinoso",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 85
       },
       {
         "name": "Leonardo Véliz",
         "roles": [
-          "MAT",
-          "EI",
-          "DE",
           "DC",
-          "LI",
-          "ME",
-          "MEI"
+          "EI",
+          "DE"
         ],
         "ovr": 70
       },
       {
         "name": "Juan Machuca",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 87
       },
       {
         "name": "Rafael González",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 71
       },
@@ -16601,20 +16487,16 @@ const teamsData = [
         "name": "Alfonso Lara",
         "roles": [
           "VOL",
-          "MLG",
           "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MEI"
         ],
         "ovr": 85
       },
       {
         "name": "Mario Galindo",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 82
       },
@@ -16622,32 +16504,23 @@ const teamsData = [
         "name": "Guillermo Páez",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 66
       },
       {
         "name": "Guillermo Yávar",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "MEI",
+          "MAT"
         ],
         "ovr": 66
       },
       {
         "name": "Jorge Socías",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 92
       }
@@ -16662,32 +16535,31 @@ const teamsData = [
     "players": [
       {
         "name": "Leão",
+        "roles": [
+          "POR"
+        ],
         "ovr": 90
       },
       {
         "name": "Luís Pereira",
         "roles": [
           "DFC",
-          "LI",
-          "LD"
+          "LI"
         ],
         "ovr": 83
       },
       {
         "name": "Marinho Peres",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 76
       },
       {
         "name": "Zé Maria",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 79
       },
@@ -16695,28 +16567,23 @@ const teamsData = [
         "name": "Piazza",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "DFC"
         ],
         "ovr": 75
       },
       {
         "name": "Marinho Chagas",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 85
       },
       {
         "name": "Jairzinho",
         "roles": [
-          "EI",
           "DE",
+          "EI",
           "DC"
         ],
         "ovr": 80
@@ -16724,45 +16591,36 @@ const teamsData = [
       {
         "name": "Leivinha",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 91
       },
       {
         "name": "César",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 61
       },
       {
         "name": "Rivellino",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
           "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 84
       },
       {
         "name": "Paulo Cézar",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
           "ME",
-          "MD"
+          "MEI",
+          "EI"
         ],
         "ovr": 78
       },
@@ -16777,7 +16635,6 @@ const teamsData = [
         "name": "Valdomiro",
         "roles": [
           "EI",
-          "DE",
           "DC"
         ],
         "ovr": 82
@@ -16785,27 +16642,23 @@ const teamsData = [
       {
         "name": "Nelinho",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 90
       },
       {
         "name": "Alfredo",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 81
       },
       {
         "name": "Marco Antônio",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 91
       },
@@ -16813,23 +16666,16 @@ const teamsData = [
         "name": "Carpegiani",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 89
       },
       {
         "name": "Ademir da Guia",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 76
       }
@@ -16844,23 +16690,24 @@ const teamsData = [
     "players": [
       {
         "name": "David Harvey",
+        "roles": [
+          "POR"
+        ],
         "ovr": 84
       },
       {
         "name": "Sandy Jardine",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 89
       },
       {
         "name": "Danny McGrain",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 85
       },
@@ -16868,58 +16715,45 @@ const teamsData = [
         "name": "Billy Bremner",
         "roles": [
           "VOL",
-          "MLG",
           "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MEI"
         ],
         "ovr": 86
       },
       {
         "name": "Jim Holton",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 76
       },
       {
         "name": "John Blackley",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 91
       },
       {
         "name": "Jimmy Johnstone",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
           "ME",
-          "MD"
+          "EI"
         ],
         "ovr": 68
       },
       {
         "name": "Kenny Dalglish",
         "roles": [
+          "DC",
           "EI",
-          "DE",
-          "DC"
+          "MEI"
         ],
         "ovr": 80
       },
       {
         "name": "Joe Jordan",
         "roles": [
-          "EI",
-          "DE",
           "DC"
         ],
         "ovr": 85
@@ -16928,20 +16762,16 @@ const teamsData = [
         "name": "David Hay",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 90
       },
       {
         "name": "Peter Lorimer",
         "roles": [
-          "EI",
           "DE",
-          "DC"
+          "MD",
+          "MEI"
         ],
         "ovr": 90
       },
@@ -16962,54 +16792,38 @@ const teamsData = [
       {
         "name": "Martin Buchan",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 65
       },
       {
         "name": "Peter Cormack",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 91
       },
       {
         "name": "Willie Donachie",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LI"
         ],
         "ovr": 69
       },
       {
         "name": "Donald Ford",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "DC",
+          "EI"
         ],
         "ovr": 75
       },
       {
         "name": "Tommy Hutchison",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
           "ME",
-          "MD"
+          "EI"
         ],
         "ovr": 83
       }
@@ -17024,23 +16838,24 @@ const teamsData = [
     "players": [
       {
         "name": "Enver Marić",
+        "roles": [
+          "POR"
+        ],
         "ovr": 86
       },
       {
         "name": "Ivan Buljan",
         "roles": [
           "DFC",
-          "LI",
-          "LD"
+          "LI"
         ],
         "ovr": 75
       },
       {
         "name": "Enver Hadžiabdić",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 83
       },
@@ -17048,20 +16863,14 @@ const teamsData = [
         "name": "Dražen Mužinić",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 88
       },
       {
         "name": "Josip Katalinski",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 92
       },
@@ -17069,11 +16878,8 @@ const teamsData = [
         "name": "Vladislav Bogićević",
         "roles": [
           "VOL",
-          "MLG",
           "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MEI"
         ],
         "ovr": 87
       },
@@ -17082,27 +16888,24 @@ const teamsData = [
         "roles": [
           "EI",
           "DE",
-          "DC"
+          "MEI"
         ],
         "ovr": 81
       },
       {
         "name": "Branko Oblak",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 89
       },
       {
         "name": "Ivica Šurjak",
         "roles": [
-          "EI",
           "DE",
+          "EI",
           "DC"
         ],
         "ovr": 79
@@ -17110,12 +16913,9 @@ const teamsData = [
       {
         "name": "Jovan Aćimović",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "VOL"
         ],
         "ovr": 82
       },
@@ -17123,20 +16923,16 @@ const teamsData = [
         "name": "Dragan Džajić",
         "roles": [
           "EI",
-          "DE",
-          "DC"
+          "ME"
         ],
         "ovr": 92
       },
       {
         "name": "Jurica Jerković",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 92
       },
@@ -17144,59 +16940,48 @@ const teamsData = [
         "name": "Miroslav Pavlović",
         "roles": [
           "VOL",
-          "MLG",
           "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MEI"
         ],
         "ovr": 90
       },
       {
         "name": "Luka Peruzović",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 84
       },
       {
         "name": "Kiril Dojčinovski",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 91
       },
       {
         "name": "Franjo Vladić",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 91
       },
       {
         "name": "Danilo Popivoda",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 67
       },
       {
         "name": "Stanislav Karasi",
         "roles": [
+          "DC",
           "EI",
-          "DE",
-          "DC"
+          "DE"
         ],
         "ovr": 80
       }
@@ -17211,14 +16996,16 @@ const teamsData = [
     "players": [
       {
         "name": "Kazadi Mwamba",
+        "roles": [
+          "POR"
+        ],
         "ovr": 77
       },
       {
         "name": "Mwepu Ilunga",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 91
       },
@@ -17226,26 +17013,21 @@ const teamsData = [
         "name": "Mwanza Mukombo",
         "roles": [
           "DFC",
-          "LI",
-          "LD"
+          "LI"
         ],
         "ovr": 91
       },
       {
         "name": "Bwanga Tshimen",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 85
       },
       {
         "name": "Lobilo Boba",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 83
       },
@@ -17253,11 +17035,7 @@ const teamsData = [
         "name": "Kilasu Massamba",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 80
       },
@@ -17265,47 +17043,33 @@ const teamsData = [
         "name": "Tshinabu Wa Munda",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 84
       },
       {
         "name": "Mana Mamuwene",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 92
       },
       {
         "name": "Kembo Uba Kembo",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "EI"
         ],
         "ovr": 84
       },
       {
         "name": "Kidumu Mantantu",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "VOL"
         ],
         "ovr": 92
       },
@@ -17313,8 +17077,7 @@ const teamsData = [
         "name": "Kabasu Babo",
         "roles": [
           "DFC",
-          "LI",
-          "LD"
+          "LI"
         ],
         "ovr": 91
       },
@@ -17328,12 +17091,9 @@ const teamsData = [
       {
         "name": "Ndaye Mulamba",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "DC",
+          "EI",
+          "DE"
         ],
         "ovr": 85
       },
@@ -17341,29 +17101,23 @@ const teamsData = [
         "name": "Mayanga Maku",
         "roles": [
           "EI",
-          "DE",
-          "DC"
+          "DE"
         ],
         "ovr": 84
       },
       {
         "name": "Kibonge Mafu",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 91
       },
       {
         "name": "Mwape Mialo",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 91
       },
@@ -17371,20 +17125,15 @@ const teamsData = [
         "name": "Kafula Ngoie",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 88
       },
       {
         "name": "Mavuba Mafuila",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 87
       }
@@ -17392,38 +17141,35 @@ const teamsData = [
   },
   {
     "name": "Netherlands 1974",
-    "roles": [
-      "EI",
-      "DE",
-      "DC"
-    ],
+        "roles": [
+          "DC",
+          "EI"
+        ],
     "flag": "🇳🇱",
     "players": [
       {
         "name": "Ruud Geels",
+        "roles": [
+          "DC",
+          "EI"
+        ],
         "ovr": 88
       },
       {
         "name": "Arie Haan",
         "roles": [
           "VOL",
-          "MLG",
           "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MEI"
         ],
         "ovr": 87
       },
       {
         "name": "Willem van Hanegem",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 88
       },
@@ -17431,7 +17177,6 @@ const teamsData = [
         "name": "Kees van Ierssel",
         "roles": [
           "DFC",
-          "LI",
           "LD"
         ],
         "ovr": 78
@@ -17439,18 +17184,15 @@ const teamsData = [
       {
         "name": "Rinus Israël",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 84
       },
       {
         "name": "Wim Jansen",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 81
       },
@@ -17458,11 +17200,7 @@ const teamsData = [
         "name": "Theo de Jong",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 88
       },
@@ -17477,7 +17215,7 @@ const teamsData = [
         "name": "Piet Keizer",
         "roles": [
           "EI",
-          "DE",
+          "ME",
           "DC"
         ],
         "ovr": 86
@@ -17485,33 +17223,26 @@ const teamsData = [
       {
         "name": "René van de Kerkhof",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
           "ME",
-          "MD"
+          "EI",
+          "MEI"
         ],
         "ovr": 91
       },
       {
         "name": "Willy van de Kerkhof",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MD",
+          "DE",
+          "MEI"
         ],
         "ovr": 91
       },
       {
         "name": "Ruud Krol",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 92
       },
@@ -17519,11 +17250,8 @@ const teamsData = [
         "name": "Johan Neeskens",
         "roles": [
           "VOL",
-          "MLG",
           "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MEI"
         ],
         "ovr": 78
       },
@@ -17532,13 +17260,8 @@ const teamsData = [
         "roles": [
           "MAT",
           "EI",
-          "DE",
           "DC",
-          "VOL",
-          "MD",
-          "MLG",
-          "MEI",
-          "ME"
+          "MEI"
         ],
         "ovr": 94
       },
@@ -17546,7 +17269,7 @@ const teamsData = [
         "name": "Rob Rensenbrink",
         "roles": [
           "EI",
-          "DE",
+          "ME",
           "DC"
         ],
         "ovr": 92
@@ -17554,8 +17277,8 @@ const teamsData = [
       {
         "name": "Johnny Rep",
         "roles": [
-          "EI",
           "DE",
+          "MD",
           "DC"
         ],
         "ovr": 85
@@ -17563,9 +17286,7 @@ const teamsData = [
       {
         "name": "Wim Rijsbergen",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 80
       },
@@ -17587,41 +17308,38 @@ const teamsData = [
     "players": [
       {
         "name": "Ronnie Hellström",
+        "roles": [
+          "POR"
+        ],
         "ovr": 89
       },
       {
         "name": "Jan Olsson",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 75
       },
       {
         "name": "Kent Karlsson",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 80
       },
       {
         "name": "Björn Nordqvist",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 84
       },
       {
         "name": "Björn Andersson",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 90
       },
@@ -17629,61 +17347,49 @@ const teamsData = [
         "name": "Ove Grahn",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 85
       },
       {
         "name": "Bo Larsson",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 92
       },
       {
         "name": "Conny Torstensson",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "EI",
+          "DE"
         ],
         "ovr": 81
       },
       {
         "name": "Ove Kindvall",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 83
       },
       {
         "name": "Ralf Edström",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 89
       },
       {
         "name": "Roland Sandberg",
         "roles": [
-          "EI",
           "DE",
+          "EI",
           "DC"
         ],
         "ovr": 83
@@ -17698,9 +17404,8 @@ const teamsData = [
       {
         "name": "Roland Grip",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 90
       },
@@ -17708,35 +17413,23 @@ const teamsData = [
         "name": "Staffan Tapper",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 87
       },
       {
         "name": "Benno Magnusson",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 82
       },
       {
         "name": "Inge Ejderstedt",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
           "ME",
-          "MD"
+          "EI"
         ],
         "ovr": 76
       },
@@ -17750,9 +17443,8 @@ const teamsData = [
       {
         "name": "Jörgen Augustsson",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 89
       }
@@ -17767,41 +17459,38 @@ const teamsData = [
     "players": [
       {
         "name": "Ladislao Mazurkiewicz",
+        "roles": [
+          "POR"
+        ],
         "ovr": 80
       },
       {
         "name": "Baudilio Jáuregui",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 77
       },
       {
         "name": "Juan Carlos Masnik",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 77
       },
       {
         "name": "Pablo Forlán",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 77
       },
       {
         "name": "Julio Montero Castillo",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 70
       },
@@ -17809,53 +17498,42 @@ const teamsData = [
         "name": "Ricardo Pavoni",
         "roles": [
           "DFC",
-          "LI",
-          "LD"
+          "LI"
         ],
         "ovr": 82
       },
       {
         "name": "Luis Cubilla",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "DE",
+          "MD",
+          "MEI"
         ],
         "ovr": 82
       },
       {
         "name": "Víctor Espárrago",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "EI",
+          "DC",
+          "MEI"
         ],
         "ovr": 82
       },
       {
         "name": "Fernando Morena",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 70
       },
       {
         "name": "Pedro Rocha",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 64
       },
@@ -17863,7 +17541,6 @@ const teamsData = [
         "name": "Rubén Corbo",
         "roles": [
           "EI",
-          "DE",
           "DC"
         ],
         "ovr": 66
@@ -17878,27 +17555,22 @@ const teamsData = [
       {
         "name": "Gustavo de Simone",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 66
       },
       {
         "name": "Luis Garisto",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 75
       },
       {
         "name": "Mario González",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 74
       },
@@ -17906,23 +17578,15 @@ const teamsData = [
         "name": "Alberto Cardaccio",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 64
       },
       {
         "name": "Julio César Jiménez",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 61
       },
@@ -17930,11 +17594,7 @@ const teamsData = [
         "name": "Walter Mantegazza",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 75
       }
@@ -17949,23 +17609,23 @@ const teamsData = [
     "players": [
       {
         "name": "Rumyancho Goranov",
+        "roles": [
+          "POR"
+        ],
         "ovr": 77
       },
       {
         "name": "Ivan Zafirov",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 80
       },
       {
         "name": "Dobromir Zhechev",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 92
       },
@@ -17973,56 +17633,46 @@ const teamsData = [
         "name": "Stefko Velichkov",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 79
       },
       {
         "name": "Bozhil Kolev",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 90
       },
       {
         "name": "Dimitar Penev",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 87
       },
       {
         "name": "Voyn Voynov",
         "roles": [
-          "EI",
           "DE",
-          "DC"
+          "MD"
         ],
         "ovr": 89
       },
       {
         "name": "Hristo Bonev",
         "roles": [
+          "MEI",
           "EI",
-          "DE",
-          "DC"
+          "DE"
         ],
         "ovr": 81
       },
       {
         "name": "Atanas Mihailov",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 83
       },
@@ -18030,41 +17680,31 @@ const teamsData = [
         "name": "Ivan Stoyanov",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 84
       },
       {
         "name": "Georgi Denev",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 92
       },
       {
         "name": "Stefan Aladzhov",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 83
       },
       {
         "name": "Mladen Vasilev",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 75
       },
@@ -18072,7 +17712,6 @@ const teamsData = [
         "name": "Kiril Milanov",
         "roles": [
           "EI",
-          "DE",
           "DC"
         ],
         "ovr": 88
@@ -18080,9 +17719,8 @@ const teamsData = [
       {
         "name": "Pavel Panov",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "MEI"
         ],
         "ovr": 79
       },
@@ -18090,7 +17728,6 @@ const teamsData = [
         "name": "Bozhidar Grigorov",
         "roles": [
           "EI",
-          "DE",
           "DC"
         ],
         "ovr": 81
@@ -18098,24 +17735,16 @@ const teamsData = [
       {
         "name": "Asparuh Nikodimov",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 81
       },
       {
         "name": "Tsonyo Vasilev",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 89
       }
@@ -18130,6 +17759,9 @@ const teamsData = [
     "players": [
       {
         "name": "Andrzej Fischer",
+        "roles": [
+          "POR"
+        ],
         "ovr": 79
       },
       {
@@ -18149,27 +17781,22 @@ const teamsData = [
       {
         "name": "Antoni Szymanowski",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 82
       },
       {
         "name": "Zbigniew Gut",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 80
       },
       {
         "name": "Jerzy Gorgoń",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 83
       },
@@ -18177,38 +17804,29 @@ const teamsData = [
         "name": "Henryk Wieczorek",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 79
       },
       {
         "name": "Mirosław Bulzacki",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 92
       },
       {
         "name": "Władysław Żmuda",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 90
       },
       {
         "name": "Adam Musiał",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 84
       },
@@ -18216,23 +17834,17 @@ const teamsData = [
         "name": "Lesław Ćmikiewicz",
         "roles": [
           "VOL",
-          "MLG",
           "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MEI"
         ],
         "ovr": 92
       },
       {
         "name": "Kazimierz Deyna",
         "roles": [
-          "VOL",
-          "MLG",
           "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MLG"
         ],
         "ovr": 89
       },
@@ -18240,50 +17852,39 @@ const teamsData = [
         "name": "Henryk Kasperczak",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 75
       },
       {
         "name": "Zygmunt Maszczyk",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 82
       },
       {
         "name": "Roman Jakóbczak",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 75
       },
       {
         "name": "Grzegorz Lato",
         "roles": [
-          "EI",
           "DE",
-          "DC"
+          "MD"
         ],
         "ovr": 91
       },
       {
         "name": "Andrzej Szarmach",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 86
       },
@@ -18291,8 +17892,7 @@ const teamsData = [
         "name": "Robert Gadocha",
         "roles": [
           "EI",
-          "DE",
-          "DC"
+          "ME"
         ],
         "ovr": 92
       }
@@ -18307,23 +17907,24 @@ const teamsData = [
     "players": [
       {
         "name": "Dino Zoff",
+        "roles": [
+          "POR"
+        ],
         "ovr": 92
       },
       {
         "name": "Luciano Spinosi",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 90
       },
       {
         "name": "Giacinto Facchetti",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 78
       },
@@ -18331,41 +17932,31 @@ const teamsData = [
         "name": "Romeo Benetti",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 75
       },
       {
         "name": "Francesco Morini",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 78
       },
       {
         "name": "Tarcisio Burgnich",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 84
       },
       {
         "name": "Sandro Mazzola",
         "roles": [
-          "VOL",
-          "MLG",
           "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MLG"
         ],
         "ovr": 72
       },
@@ -18373,19 +17964,14 @@ const teamsData = [
         "name": "Fabio Capello",
         "roles": [
           "VOL",
-          "MLG",
           "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MEI"
         ],
         "ovr": 71
       },
       {
         "name": "Giorgio Chinaglia",
         "roles": [
-          "EI",
-          "DE",
           "DC"
         ],
         "ovr": 90
@@ -18393,21 +17979,17 @@ const teamsData = [
       {
         "name": "Gianni Rivera",
         "roles": [
-          "VOL",
-          "MLG",
           "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MLG"
         ],
         "ovr": 77
       },
       {
         "name": "Gigi Riva",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 82
       },
@@ -18421,27 +18003,21 @@ const teamsData = [
       {
         "name": "Giuseppe Sabadini",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 85
       },
       {
         "name": "Mauro Bellugi",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 88
       },
       {
         "name": "Giuseppe Wilson",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 81
       },
@@ -18449,11 +18025,7 @@ const teamsData = [
         "name": "Antonio Juliano",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 83
       },
@@ -18461,23 +18033,16 @@ const teamsData = [
         "name": "Luciano Re Cecconi",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 83
       },
       {
         "name": "Franco Causio",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "DE",
+          "MD",
+          "MEI"
         ],
         "ovr": 89
       }
@@ -18492,13 +18057,15 @@ const teamsData = [
     "players": [
       {
         "name": "Daniel Carnevali",
+        "roles": [
+          "POR"
+        ],
         "ovr": 78
       },
       {
         "name": "Rubén Ayala",
         "roles": [
           "EI",
-          "DE",
           "DC"
         ],
         "ovr": 66
@@ -18506,20 +18073,15 @@ const teamsData = [
       {
         "name": "Carlos Babington",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 89
       },
       {
         "name": "Agustín Balbuena",
         "roles": [
-          "EI",
-          "DE",
           "DC"
         ],
         "ovr": 77
@@ -18527,30 +18089,25 @@ const teamsData = [
       {
         "name": "Ángel Bargas",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 78
       },
       {
         "name": "Miguel Ángel Brindisi",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 66
       },
       {
         "name": "Jorge Carrascosa",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 86
       },
@@ -18558,41 +18115,31 @@ const teamsData = [
         "name": "Enrique Chazarreta",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 77
       },
       {
         "name": "Rubén Glaria",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 66
       },
       {
         "name": "Ramón Heredia",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 92
       },
       {
         "name": "René Houseman",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "DE",
+          "MD",
+          "EI"
         ],
         "ovr": 85
       },
@@ -18606,18 +18153,15 @@ const teamsData = [
       {
         "name": "Mario Kempes",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 82
       },
       {
         "name": "Roberto Perfumo",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 73
       },
@@ -18625,7 +18169,6 @@ const teamsData = [
         "name": "Aldo Poy",
         "roles": [
           "EI",
-          "DE",
           "DC"
         ],
         "ovr": 84
@@ -18633,9 +18176,7 @@ const teamsData = [
       {
         "name": "Francisco Sá",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 79
       },
@@ -18643,11 +18184,7 @@ const teamsData = [
         "name": "Carlos Squeo",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 86
       },
@@ -18655,11 +18192,7 @@ const teamsData = [
         "name": "Roberto Telch",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 73
       }
@@ -18674,6 +18207,9 @@ const teamsData = [
     "players": [
       {
         "name": "Henri Françillon",
+        "roles": [
+          "POR"
+        ],
         "ovr": 81
       },
       {
@@ -18686,48 +18222,39 @@ const teamsData = [
       {
         "name": "Arsène Auguste",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "LD",
+          "DFC"
         ],
         "ovr": 89
       },
       {
         "name": "Fritz André",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 79
       },
       {
         "name": "Serge Ducosté",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 85
       },
       {
         "name": "Pierre Bayonne",
         "roles": [
-          "DFC",
           "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 82
       },
       {
         "name": "Philippe Vorbe",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT",
+          "MLG"
         ],
         "ovr": 82
       },
@@ -18735,11 +18262,7 @@ const teamsData = [
         "name": "Jean-Claude Désir",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 77
       },
@@ -18747,23 +18270,15 @@ const teamsData = [
         "name": "Eddy Antoine",
         "roles": [
           "VOL",
-          "MLG",
-          "MAT",
-          "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 81
       },
       {
         "name": "Guy François",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 78
       },
@@ -18771,7 +18286,6 @@ const teamsData = [
         "name": "Guy Saint-Vil",
         "roles": [
           "EI",
-          "DE",
           "DC"
         ],
         "ovr": 88
@@ -18779,30 +18293,22 @@ const teamsData = [
       {
         "name": "Ernst Jean-Joseph",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 80
       },
       {
         "name": "Serge Racine",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 76
       },
       {
         "name": "Wilner Nazaire",
         "roles": [
-          "DFC",
-          "LI",
-          "LD"
+          "DFC"
         ],
         "ovr": 84
       },
@@ -18810,7 +18316,6 @@ const teamsData = [
         "name": "Roger Saint-Vil",
         "roles": [
           "EI",
-          "DE",
           "DC"
         ],
         "ovr": 62
@@ -18818,21 +18323,16 @@ const teamsData = [
       {
         "name": "Fritz Leandré",
         "roles": [
-          "EI",
-          "DE",
-          "DC"
+          "DC",
+          "EI"
         ],
         "ovr": 85
       },
       {
         "name": "Joseph-Marion Leandré",
         "roles": [
-          "VOL",
-          "MLG",
-          "MAT",
           "MEI",
-          "ME",
-          "MD"
+          "MAT"
         ],
         "ovr": 79
       },
@@ -18840,7 +18340,6 @@ const teamsData = [
         "name": "Claude Barthélemy",
         "roles": [
           "EI",
-          "DE",
           "DC"
         ],
         "ovr": 83
